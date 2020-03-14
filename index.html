@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SCION Topology</title>
+    <meta name="author" content="Fin Christensen">
+    <meta name="description" content="Interactive SCION Network Topology">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+      body, html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      #cy {
+        width: 100vw;
+        height: 100vh;
+      }
+     
+      #menu {
+        margin: 1em;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 99999;
+        line-height: 2em;
+      }
+    </style>
+
+    <script src="https://unpkg.com/cytoscape@3.14.0/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/popper.js@1.16.0/dist/umd/popper.js"></script>
+    <script src="https://unpkg.com/cytoscape-popper@1.0.6/cytoscape-popper.js"></script>
+    <script src="https://unpkg.com/tippy.js@5.1.3/dist/tippy-bundle.iife.min.js"></script>
+    <script src="https://unpkg.com/cytoscape-anywhere-panning@0.5.3"></script>
+    <script type="module" src="https://unpkg.com/@polymer/paper-toggle-button@3.0.1/paper-toggle-button.js?module"></script>
+    <script type="module" src="https://unpkg.com/@polymer/paper-card@3.0.1/paper-card.js?module"></script>
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@5.1.3/dist/tippy.css" />
+  <link rel="stylesheet" href="https://unpkg.com/tippy.js@5.1.3/themes/translucent.css" />
+  </head>
+
+  <body>
+    <paper-card heading="Show IP Addresses" id="menu">
+      <div class="card-content">
+        <paper-toggle-button id="mtn">Maintenance Access</paper-toggle-button>
+        <paper-toggle-button id="ext">External Network</paper-toggle-button>
+        <paper-toggle-button id="gts">AS GTS Internal Network</paper-toggle-button>
+        <paper-toggle-button id="dfn">AS DFN Internal Network</paper-toggle-button>
+        <paper-toggle-button id="viw">AS VirtualWall Internal Network</paper-toggle-button>
+        <paper-toggle-button id="g5k" disabled>AS Grid5000 Internal Network</paper-toggle-button>
+        <paper-toggle-button id="exo" disabled>AS ExoGeni Internal Network</paper-toggle-button>
+      </div>
+    </paper-card>
+      
+    <div id="cy"></div>
+
+    <script type="module">
+      function makeTippy(cy, node, placement, text, offset) {
+        let ref = cy.getElementById(node).popperRef();
+        
+        if (!offset) {
+          offset = "0,0";
+        }
+      
+        // unfortunately, a dummy element must be passed
+        // as tippy only accepts a dom element as the target
+        // https://github.com/atomiks/tippyjs/issues/661
+        let dummyDomEle = document.createElement('div');
+      
+        let tip = tippy(dummyDomEle, {
+           onCreate: function(instance) { // mandatory
+             // patch the tippy's popper reference so positioning works
+             // https://atomiks.github.io/tippyjs/misc/#custom-position
+             instance.popperInstance.reference = ref;
+           },
+           lazy: false, // mandatory
+           trigger: 'manual', // mandatory
+          
+           // dom element inside the tippy:
+           content: function() { // function can be better for performance
+             let div = document.createElement('div');
+             div.innerHTML = text;
+             return div;
+           },
+          
+           // your own preferences:
+           arrow: true,
+           placement: placement,
+           hideOnClick: false,
+           multiple: true,
+           offset: offset,
+           sticky: true,
+          theme: "translucent",
+        });
+      
+        return tip;
+      }
+      
+      const cy = cytoscape({
+        container: document.getElementById("cy"),
+        wheelSensitivity: 0.25,
+        autoungrabify: true,
+        style: [
+          {
+            selector: "node",
+            css: {
+              "content": "data(id)",
+              "text-valign": "center",
+              "text-halign": "center",
+              "font-size": "8px",
+              "text-wrap": "wrap",
+              "text-max-width": "25px",
+            }
+          },
+          {
+            selector: ":parent",
+            css: {
+              "text-valign": "top",
+              "text-halign": "center",
+              "font-size": "12px",
+              "text-wrap": "none",
+            }
+          },
+          {
+            selector: "edge",
+            css: {
+              "curve-style": "bezier",
+            }
+          }
+        ],
+        elements: {
+          nodes: [
+            { data: { id: "Géant" } },
+            { data: { id: "SIDN" } },
+            { data: { id: "SWITCH" } },
+            { data: { id: "SCMN" } },
+            { data: { id: "Vienna" } },
+            { data: { id: "OvGU Core" } },
+            { data: { id: "OvGU AP" } },
+            { data: { id: "DFN" } },
+            { data: { id: "Exo Geni" } },
+            { data: { id: "Grid 5000" } },
+            { data: { id: "VirtualWall" } },
+            { data: { id: "KREO NET" } },
+            { data: { id: "AMS", parent: "Géant" } },
+            { data: { id: "PAR", parent: "Géant" } },
+            { data: { id: "HAM", parent: "Géant" } },
+            { data: { id: "PRG", parent: "Géant" } },
+            { data: { id: "ams0", parent: "AMS" } },
+            { data: { id: "ams1", parent: "AMS" } },
+            { data: { id: "ams2", parent: "AMS" } },
+            { data: { id: "ams3", parent: "AMS" } },
+            { data: { id: "ams4", parent: "AMS" } },
+            { data: { id: "ams5", parent: "AMS" } },
+            { data: { id: "par0", parent: "PAR" } },
+            { data: { id: "par1", parent: "PAR" } },
+            { data: { id: "par2", parent: "PAR" } },
+            { data: { id: "ham0", parent: "HAM" } },
+            { data: { id: "ham1", parent: "HAM" } },
+            { data: { id: "ham2", parent: "HAM" } },
+            { data: { id: "prg0", parent: "PRG" } },
+            { data: { id: "prg1", parent: "PRG" } },
+            { data: { id: "sidn0", parent: "SIDN" } },
+            { data: { id: "sidn1", parent: "SIDN" } },
+            { data: { id: "switch 0", parent: "SWITCH" } },
+            { data: { id: "switch 1", parent: "SWITCH" } },
+            { data: { id: "dfn0", parent: "DFN" } },
+            { data: { id: "dfn1", parent: "DFN" } },
+            { data: { id: "vw0", parent: "VirtualWall" } },
+            { data: { id: "vw1", parent: "VirtualWall" } },
+          ],
+          edges: [
+            { data: { source: "sidn0", target: "ams1" } },
+            { data: { source: "sidn1", target: "ams2" } },
+            { data: { source: "KREO NET", target: "ams3" } },
+            { data: { source: "KREO NET", target: "ams4" } },
+            { data: { source: "switch 0", target: "ams5" } },
+            { data: { source: "switch 1", target: "ham2" } },
+            { data: { source: "dfn0", target: "ham0" } },
+            { data: { source: "dfn1", target: "ham1" } },
+            { data: { source: "Grid 5000", target: "par1" } },
+            { data: { source: "Grid 5000", target: "par2" } },
+            { data: { source: "vw0", target: "ams0" } },
+            { data: { source: "vw1", target: "par0" } },
+            { data: { source: "vw0", target: "Exo Geni" } },
+            { data: { source: "vw1", target: "Exo Geni" } },
+            { data: { source: "vw0", target: "Grid 5000" } },
+            { data: { source: "vw1", target: "Grid 5000" } },
+            { data: { source: "prg0", target: "SCMN" } },
+            { data: { source: "prg0", target: "OvGU AP" } },
+            { data: { source: "prg1", target: "Vienna" } },
+            { data: { source: "prg1", target: "OvGU Core" } },
+          ]
+        },
+        layout: {
+          name: "preset",
+          positions: {
+            par0: { x: 125, y: 300 },
+            par1: { x: 125, y: 350 },
+            par2: { x: 125, y: 400 },
+            ams0: { x: 200, y: 300 },
+            ams1: { x: 250, y: 300 },
+            ams2: { x: 300, y: 300 },
+            ams3: { x: 350, y: 300 },
+            ams4: { x: 400, y: 300 },
+            ams5: { x: 450, y: 300 },
+            ham0: { x: 337.5, y: 400 },
+            ham1: { x: 387.5, y: 400 },
+            ham2: { x: 437.5, y: 400 },
+            prg0: { x: 212.5, y: 400 },
+            prg1: { x: 262.5, y: 400 },
+            sidn0: { x: 250, y: 175 },
+            sidn1: { x: 300, y: 175 },
+            "KREO NET": { x: 375, y: 175 },
+            "switch 0": { x: 575, y: 300 },
+            "switch 1": { x: 575, y: 400 },
+            "Grid 5000": { x: 0, y: 300 },
+            "Exo Geni": { x: 175, y: 175 },
+            vw0: { x: 75, y: 150 },
+            vw1: { x: 75, y: 200 },
+            dfn0: { x: 337.5, y: 500 },
+            dfn1: { x: 387.5, y: 500 },
+            "OvGU AP": { x: 162.5, y: 500 },
+            SCMN: { x: 212.5, y: 550 },
+            "OvGU Core": { x: 262.5, y: 500 },
+            Vienna: { x: 312.5, y: 550 },
+          },
+        },
+      });
+      
+      cy.anywherePanning();
+      
+      const mtn_toggle = document.getElementById("mtn");
+      const ext_toggle = document.getElementById("ext");
+      const gts_toggle = document.getElementById("gts");
+      const dfn_toggle = document.getElementById("dfn");
+      const viw_toggle = document.getElementById("viw");
+      const g5k_toggle = document.getElementById("g5k");
+      const exo_toggle = document.getElementById("exo");
+      
+      const mtn = [
+        makeTippy(cy, "vw0", "top", "TBD"),
+        makeTippy(cy, "vw1", "top", "TBD"),
+        makeTippy(cy, "ams0", "bottom", "GTS VPN<br>172.16.0.1"),
+        makeTippy(cy, "ams1", "bottom", "GTS VPN<br>172.16.0.2"),
+        makeTippy(cy, "ams2", "bottom", "GTS VPN<br>172.16.0.3"),
+        makeTippy(cy, "ams3", "bottom", "GTS VPN<br>172.16.0.4"),
+        makeTippy(cy, "ams4", "bottom", "GTS VPN<br>172.16.0.5"),
+        makeTippy(cy, "ams5", "bottom", "GTS VPN<br>172.16.0.6"),
+        makeTippy(cy, "par0", "right", "GTS VPN<br>172.16.0.7"),
+        makeTippy(cy, "par1", "right", "GTS VPN<br>172.16.0.8"),
+        makeTippy(cy, "par2", "right", "GTS VPN<br>172.16.0.9"),
+        makeTippy(cy, "ham0", "top", "GTS VPN<br>172.16.0.10"),
+        makeTippy(cy, "ham1", "top", "GTS VPN<br>172.16.0.11"),
+        makeTippy(cy, "ham2", "top", "GTS VPN<br>172.16.0.12"),
+        makeTippy(cy, "prg0", "top", "GTS VPN<br>172.16.0.13"),
+        makeTippy(cy, "prg1", "top", "GTS VPN<br>172.16.0.14"),
+        makeTippy(cy, "dfn0", "bottom", "TBD"),
+        makeTippy(cy, "dfn1", "bottom", "TBD"),
+      ];
+      const ext = [
+        makeTippy(cy, "ams0", "top", "10.1.1.1"),
+        makeTippy(cy, "ams1", "top", "10.1.2.1"),
+        makeTippy(cy, "ams2", "top", "10.1.3.1"),
+        makeTippy(cy, "ams3", "top", "10.1.4.1"),
+        makeTippy(cy, "ams4", "top", "10.1.5.1"),
+        makeTippy(cy, "ams5", "right", "10.1.6.1"),
+        makeTippy(cy, "par0", "top", "10.1.7.1"),
+        makeTippy(cy, "par1", "left", "10.1.8.1"),
+        makeTippy(cy, "par2", "left", "10.1.9.1"),
+        makeTippy(cy, "ham0", "bottom", "10.1.10.1"),
+        makeTippy(cy, "ham1", "bottom", "10.1.11.1"),
+        makeTippy(cy, "ham2", "right", "10.1.12.1"),
+        makeTippy(cy, "prg0", "bottom", "10.1.13.1", "-36, 0"),
+        makeTippy(cy, "prg0", "bottom", "10.1.19.1", "36, 0"),
+        makeTippy(cy, "prg1", "bottom", "10.1.14.1", "-36, 0"),
+        makeTippy(cy, "prg1", "bottom", "10.1.20.1", "36, 0"),
+        makeTippy(cy, "vw0", "left", "10.1.15.2"),
+        makeTippy(cy, "vw0", "bottom", "10.1.1.2"),
+        makeTippy(cy, "vw0", "right", "10.1.16.2"),
+        makeTippy(cy, "vw1", "left", "10.1.17.2"),
+        makeTippy(cy, "vw1", "bottom", "10.1.7.2"),
+        makeTippy(cy, "vw1", "right", "10.1.18.2"),
+        makeTippy(cy, "Exo Geni", "left", "10.1.16.3", "-24,0"),
+        makeTippy(cy, "Exo Geni", "left", "10.1.18.3", "24,0"),
+        makeTippy(cy, "dfn0", "top", "10.1.10.4"),
+        makeTippy(cy, "dfn1", "top", "10.1.11.4"),
+        makeTippy(cy, "sidn0", "bottom", "10.1.2.5"),
+        makeTippy(cy, "sidn1", "bottom", "10.1.3.5"),
+        makeTippy(cy, "switch 0", "left", "10.1.6.6"),
+        makeTippy(cy, "switch 1", "left", "10.1.12.6"),
+        makeTippy(cy, "Grid 5000", "top", "10.1.15.7", "-36, 0"),
+        makeTippy(cy, "Grid 5000", "top", "10.1.17.7", "36, 0"),
+        makeTippy(cy, "Grid 5000", "bottom", "10.1.9.7", "-36, 0"),
+        makeTippy(cy, "Grid 5000", "bottom", "10.1.8.7", "36, 0"),
+        makeTippy(cy, "KREO NET", "bottom", "10.1.4.8", "-36, 0"),
+        makeTippy(cy, "KREO NET", "bottom", "10.1.5.8", "36, 0"),
+        makeTippy(cy, "OvGU AP", "top", "10.1.13.9"),
+        makeTippy(cy, "SCMN", "top", "10.1.19.10"),
+        makeTippy(cy, "OvGU Core", "top", "10.1.14.11"),
+        makeTippy(cy, "Vienna", "top", "10.1.20.12"),
+      ];
+      const gts = [
+        makeTippy(cy, "ams0", "bottom", "10.42.42.1"),
+        makeTippy(cy, "ams1", "bottom", "10.42.42.2"),
+        makeTippy(cy, "ams2", "bottom", "10.42.42.3"),
+        makeTippy(cy, "ams3", "bottom", "10.42.42.4"),
+        makeTippy(cy, "ams4", "bottom", "10.42.42.5"),
+        makeTippy(cy, "ams5", "bottom", "10.42.42.6"),
+        makeTippy(cy, "par0", "right", "10.42.42.7"),
+        makeTippy(cy, "par1", "right", "10.42.42.8"),
+        makeTippy(cy, "par2", "right", "10.42.42.9"),
+        makeTippy(cy, "ham0", "top", "10.42.42.10"),
+        makeTippy(cy, "ham1", "top", "10.42.42.11"),
+        makeTippy(cy, "ham2", "top", "10.42.42.12"),
+        makeTippy(cy, "prg0", "top", "10.42.42.13"),
+        makeTippy(cy, "prg1", "top", "10.42.42.14"),
+      ];
+      const dfn = [
+        makeTippy(cy, "dfn0", "bottom", "10.43.43.1"),
+        makeTippy(cy, "dfn1", "bottom", "10.43.43.2"),
+      ];
+      const viw = [
+        makeTippy(cy, "vw0", "top", "10.44.44.1"),
+        makeTippy(cy, "vw1", "top", "10.44.44.2"),
+      ];
+      const g5k = [
+      ];
+      const exo = [
+      ];
+      
+      mtn_toggle.addEventListener("click", (ev) => {
+        if (ev.target.checked) {
+          mtn.forEach(tip => tip.show());
+        } else {
+          mtn.forEach(tip => tip.hide());
+        }
+      });
+      ext_toggle.addEventListener("click", (ev) => {
+        if (ev.target.checked) {
+          ext.forEach(tip => tip.show());
+        } else {
+          ext.forEach(tip => tip.hide());
+        }
+      });
+      gts_toggle.addEventListener("click", (ev) => {
+        if (ev.target.checked) {
+          gts.forEach(tip => tip.show());
+        } else {
+          gts.forEach(tip => tip.hide());
+        }
+      });
+      dfn_toggle.addEventListener("click", (ev) => {
+        if (ev.target.checked) {
+          dfn.forEach(tip => tip.show());
+        } else {
+          dfn.forEach(tip => tip.hide());
+        }
+      });
+      viw_toggle.addEventListener("click", (ev) => {
+        if (ev.target.checked) {
+          viw.forEach(tip => tip.show());
+        } else {
+          viw.forEach(tip => tip.hide());
+        }
+      });
+      g5k_toggle.addEventListener("click", (ev) => {
+        if (ev.target.checked) {
+          g5k.forEach(tip => tip.show());
+        } else {
+          g5k.forEach(tip => tip.hide());
+        }
+      });
+      exo_toggle.addEventListener("click", (ev) => {
+        if (ev.target.checked) {
+          exo.forEach(tip => tip.show());
+        } else {
+          exo.forEach(tip => tip.hide());
+        }
+      });
+      
+      window.cy = cy;
+    </script>
+  </body>
+</html>
