@@ -70,6 +70,7 @@
               y: src.y + (trg.y - src.y) * 0.1,
             };
           };
+          offset = "0,0";
         } else if (offset === "trg") {
           opts.renderedPosition = () => {
             let src = elem.renderedSourceEndpoint();
@@ -80,6 +81,7 @@
               y: src.y + (trg.y - src.y) * 0.9,
             };
           };
+          offset = "0,0";
         } else if (!offset) {
           offset = "0,0";
         }
