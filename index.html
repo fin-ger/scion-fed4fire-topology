@@ -80,13 +80,11 @@
               y: src.y + (trg.y - src.y) * 0.9,
             };
           };
+        } else if (!offset) {
+          offset = "0,0";
         }
         
         let ref = elem.popperRef(opts);
-        
-        if (!offset) {
-          offset = "0,0";
-        }
       
         // unfortunately, a dummy element must be passed
         // as tippy only accepts a dom element as the target
