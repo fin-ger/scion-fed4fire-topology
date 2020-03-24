@@ -296,16 +296,16 @@
         };
 
         let gts_mtn = configuration['GTS maintenance access'];
-        let gts_mtn_tippy = Object.keys(gts_mtn).map((key, _index) => {
+        let gts_mtn_tippy = Object.keys(gts_mtn).map((hostname, _index) => {
             // Offset to cut out `GTS VPN`
             return makeTippy(cy, hostname, mtn_tip[hostname], `GTS VPN<br>${gts_mtn[hostname].substring(8)}`);
         });
         let dfn_mtn = configuration['DFN maintenance access'];
-        let dfn_mtn_tippy = Object.keys(dfn_mtn).map((key, _index) => {
+        let dfn_mtn_tippy = Object.keys(dfn_mtn).map((hostname, _index) => {
             return makeTippy(cy, hostname, mtn_tip[hostname], dfn_mtn[hostname]);
         });
         let viw_mtn = configuration['VWall maintenance access'];
-        let viw_mtn_tippy = Object.keys(viw_mtn).map((key, _index) => {
+        let viw_mtn_tippy = Object.keys(viw_mtn).map((hostname, _index) => {
             return makeTippy(cy, hostname, mtn_tip[hostname], viw_mtn[hostname]);
         });
 
@@ -371,7 +371,7 @@
         };
 
         let gts_intern = configuration['GTS internal network'];
-        const gts = Object.keys(gts_intern).map((key, _index) => {
+        const gts = Object.keys(gts_intern).map((hostname, _index) => {
             return makeTippy(cy, hostname, gts_tip[hostname], gts_intern[hostname]);
         });
 
@@ -380,7 +380,7 @@
             "dfn1": "bottom",
         };
         let dfn_intern = configuration['DFN internal network'];
-        const dfn = Object.keys(dfn_intern).map((key, _index) => {
+        const dfn = Object.keys(dfn_intern).map((hostname, _index) => {
             return makeTippy(cy, hostname, dfn_tip[hostname], dfn_intern[hostname]);
         });
         let viw_tip = {
@@ -388,7 +388,7 @@
             "vw1": "top",
         }
         let viw_intern = configuration['VWall internal network']
-        const viw = Object.keys(viw_intern).map((key, _index) => {
+        const viw = Object.keys(viw_intern).map((hostname, _index) => {
             return makeTippy(cy, hostname, viw_tip[hostname], viw_intern[hostname]);
         });
 
