@@ -40,6 +40,7 @@
     <script type="module-shim">
       import "@polymer/paper-toggle-button";
       import "@polymer/paper-card";
+      import "@polymer/paper-button";
     </script>
 
     <link rel="stylesheet" href="node_modules/tippy.js/dist/tippy.css" />
@@ -56,6 +57,8 @@
         <paper-toggle-button id="viw">AS VirtualWall Internal Network</paper-toggle-button>
         <paper-toggle-button id="g5k" disabled>AS Grid5000 Internal Network</paper-toggle-button>
         <paper-toggle-button id="exo" disabled>AS ExoGeni Internal Network</paper-toggle-button>
+        <paper-button href="/scionlab-fed4fire-topology/data/fed4fire.json">Export JSON</paper-button>
+        <paper-button href="/scionlab-fed4fire-topology/data/fed4fire.yaml">Export YAML</paper-button>
       </div>
     </paper-card>
 

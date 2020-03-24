@@ -4,6 +4,8 @@
     "@polymer/paper-toggle-button/": "./node_modules/@polymer/paper-toggle-button/",
     "cytoscape-anywhere-panning": "./node_modules/cytoscape-anywhere-panning/dist/index.esm.js",
     "cytoscape-anywhere-panning/": "./node_modules/cytoscape-anywhere-panning/dist/",
+    "@polymer/paper-button": "./node_modules/@polymer/paper-button/paper-button.js",
+    "@polymer/paper-button/": "./node_modules/@polymer/paper-button/",
     "@polymer/paper-card": "./node_modules/@polymer/paper-card/paper-card.js",
     "@polymer/paper-card/": "./node_modules/@polymer/paper-card/",
     "cytoscape-popper": "./node_modules/cytoscape-popper/cytoscape-popper.js",
