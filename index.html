@@ -18,7 +18,7 @@
         width: 100vw;
         height: 100vh;
       }
-     
+
       #menu {
         margin: 1em;
         position: absolute;
@@ -41,7 +41,7 @@
       import "@polymer/paper-toggle-button";
       import "@polymer/paper-card";
     </script>
-    
+
     <link rel="stylesheet" href="node_modules/tippy.js/dist/tippy.css" />
     <link rel="stylesheet" href="node_modules/tippy.js/themes/translucent.css" />
   </head>
@@ -58,19 +58,19 @@
         <paper-toggle-button id="exo" disabled>AS ExoGeni Internal Network</paper-toggle-button>
       </div>
     </paper-card>
-      
+
     <div id="cy"></div>
 
     <script>
       function makeTippy(cy, id, placement, text, offset) {
         let elem = cy.getElementById(id);
         let opts = {};
-        
+
         if (offset === "src") {
           opts.renderedPosition = () => {
             let src = elem.renderedSourceEndpoint();
             let trg = elem.renderedTargetEndpoint();
-            
+
             return {
               x: src.x + (trg.x - src.x) * 0.1,
               y: src.y + (trg.y - src.y) * 0.1,
@@ -81,7 +81,7 @@
           opts.renderedPosition = () => {
             let src = elem.renderedSourceEndpoint();
             let trg = elem.renderedTargetEndpoint();
-            
+
             return {
               x: src.x + (trg.x - src.x) * 0.9,
               y: src.y + (trg.y - src.y) * 0.9,
@@ -91,14 +91,14 @@
         } else if (!offset) {
           offset = "0,0";
         }
-        
+
         let ref = elem.popperRef(opts);
-      
+
         // unfortunately, a dummy element must be passed
         // as tippy only accepts a dom element as the target
         // https://github.com/atomiks/tippyjs/issues/661
         let dummyDomEle = document.createElement('div');
-      
+
         let tip = tippy(dummyDomEle, {
            onCreate: (instance) => { // mandatory
              // patch the tippy's popper reference so positioning works
@@ -107,14 +107,14 @@
            },
            lazy: false, // mandatory
            trigger: 'manual', // mandatory
-          
+
            // dom element inside the tippy:
            content: () => {
              let div = document.createElement('div');
              div.innerHTML = text;
              return div;
            },
-          
+
            // your own preferences:
            arrow: true,
            placement: placement,
@@ -124,294 +124,332 @@
            sticky: true,
            theme: "translucent",
         });
-      
+
         return tip;
       }
-      
-      const cy = cytoscape({
-        container: document.getElementById("cy"),
-        wheelSensitivity: 0.25,
-        autoungrabify: true,
-        style: [
-          {
-            selector: "node",
-            css: {
-              "content": "data(id)",
-              "text-valign": "center",
-              "text-halign": "center",
-              "font-size": "8px",
-              "text-wrap": "wrap",
-              "text-max-width": "25px",
+     fetch('/scionlab-fed4fire-topology/data/fed4fire.json')
+    .then((response) => {
+        return response.json();
+    })
+     .then((configuration) => {
+        const cy = cytoscape({
+                container: document.getElementById("cy"),
+                wheelSensitivity: 0.25,
+                autoungrabify: true,
+                style: [
+                {
+                    selector: "node",
+                    css: {
+                    "content": "data(id)",
+                    "text-valign": "center",
+                    "text-halign": "center",
+                    "font-size": "8px",
+                    "text-wrap": "wrap",
+                    "text-max-width": "25px",
+                    }
+                },
+                {
+                    selector: ":parent",
+                    css: {
+                    "text-valign": "top",
+                    "text-halign": "center",
+                    "font-size": "12px",
+                    "text-wrap": "none",
+                    }
+                },
+                {
+                    selector: "edge",
+                    css: {
+                    "curve-style": "bezier",
+                    }
+                }
+                ],
+                elements: {
+                nodes: [
+                    { data: { id: "Géant" } },
+                    { data: { id: "SIDN" } },
+                    { data: { id: "SWITCH" } },
+                    { data: { id: "SCMN" } },
+                    { data: { id: "Vienna" } },
+                    { data: { id: "OvGU Core" } },
+                    { data: { id: "OvGU AP" } },
+                    { data: { id: "DFN" } },
+                    { data: { id: "Exo Geni" } },
+                    { data: { id: "Grid 5000" } },
+                    { data: { id: "VirtualWall" } },
+                    { data: { id: "KREO NET" } },
+                    { data: { id: "AMS", parent: "Géant" } },
+                    { data: { id: "PAR", parent: "Géant" } },
+                    { data: { id: "HAM", parent: "Géant" } },
+                    { data: { id: "PRG", parent: "Géant" } },
+                    { data: { id: "ams0", parent: "AMS" } },
+                    { data: { id: "ams1", parent: "AMS" } },
+                    { data: { id: "ams2", parent: "AMS" } },
+                    { data: { id: "ams3", parent: "AMS" } },
+                    { data: { id: "ams4", parent: "AMS" } },
+                    { data: { id: "ams5", parent: "AMS" } },
+                    { data: { id: "par0", parent: "PAR" } },
+                    { data: { id: "par1", parent: "PAR" } },
+                    { data: { id: "par2", parent: "PAR" } },
+                    { data: { id: "ham0", parent: "HAM" } },
+                    { data: { id: "ham1", parent: "HAM" } },
+                    { data: { id: "ham2", parent: "HAM" } },
+                    { data: { id: "prg0", parent: "PRG" } },
+                    { data: { id: "prg1", parent: "PRG" } },
+                    { data: { id: "sidn0", parent: "SIDN" } },
+                    { data: { id: "sidn1", parent: "SIDN" } },
+                    { data: { id: "switch 0", parent: "SWITCH" } },
+                    { data: { id: "switch 1", parent: "SWITCH" } },
+                    { data: { id: "dfn0", parent: "DFN" } },
+                    { data: { id: "dfn1", parent: "DFN" } },
+                    { data: { id: "vw0", parent: "VirtualWall" } },
+                    { data: { id: "vw1", parent: "VirtualWall" } },
+                ],
+                edges: [
+                    { data: { id: "sidn0-ams2", source: "sidn0", target: "ams2" } },
+                    { data: { id: "sidn1-ams3", source: "sidn1", target: "ams3" } },
+                    { data: { id: "KREO NET-ams4", source: "KREO NET", target: "ams4" } },
+                    { data: { id: "KREO NET-ams5", source: "KREO NET", target: "ams5" } },
+                    { data: { id: "switch 0-par1", source: "switch 0", target: "par1" } },
+                    { data: { id: "switch 1-ham2", source: "switch 1", target: "ham2" } },
+                    { data: { id: "dfn0-ham0", source: "dfn0", target: "ham0" } },
+                    { data: { id: "dfn1-ham1", source: "dfn1", target: "ham1" } },
+                    { data: { id: "Grid 5000-par0", source: "Grid 5000", target: "par0" } },
+                    { data: { id: "Grid 5000-par2", source: "Grid 5000", target: "par2" } },
+                    { data: { id: "vw0-ams1", source: "vw0", target: "ams1" } },
+                    { data: { id: "vw1-ams0", source: "vw1", target: "ams0" } },
+                    { data: { id: "vw0-Exo Geni", source: "vw0", target: "Exo Geni" } },
+                    { data: { id: "vw1-Exo Geni", source: "vw1", target: "Exo Geni" } },
+                    { data: { id: "vw0-Grid 5000", source: "vw0", target: "Grid 5000" } },
+                    { data: { id: "vw1-Grid 5000", source: "vw1", target: "Grid 5000" } },
+                    { data: { id: "prg0-SCMN", source: "prg0", target: "SCMN" } },
+                    { data: { id: "prg0-OvGU AP", source: "prg0", target: "OvGU AP" } },
+                    { data: { id: "prg1-Vienna", source: "prg1", target: "Vienna" } },
+                    { data: { id: "prg1-OvGU Core", source: "prg1", target: "OvGU Core" } },
+                ]
+                },
+                layout: {
+                name: "preset",
+                positions: {
+                    par0: { x: 125, y: 300 },
+                    par1: { x: 125, y: 350 },
+                    par2: { x: 125, y: 400 },
+                    ams0: { x: 200, y: 300 },
+                    ams1: { x: 250, y: 300 },
+                    ams2: { x: 300, y: 300 },
+                    ams3: { x: 350, y: 300 },
+                    ams4: { x: 400, y: 300 },
+                    ams5: { x: 450, y: 300 },
+                    ham0: { x: 337.5, y: 400 },
+                    ham1: { x: 387.5, y: 400 },
+                    ham2: { x: 437.5, y: 400 },
+                    prg0: { x: 212.5, y: 400 },
+                    prg1: { x: 262.5, y: 400 },
+                    sidn0: { x: 300, y: 175 },
+                    sidn1: { x: 350, y: 175 },
+                    "KREO NET": { x: 425, y: 175 },
+                    "switch 0": { x: 575, y: 350 },
+                    "switch 1": { x: 575, y: 400 },
+                    "Grid 5000": { x: 0, y: 300 },
+                    "Exo Geni": { x: 175, y: 175 },
+                    vw0: { x: 75, y: 150 },
+                    vw1: { x: 75, y: 200 },
+                    dfn0: { x: 337.5, y: 500 },
+                    dfn1: { x: 387.5, y: 500 },
+                    "OvGU AP": { x: 162.5, y: 500 },
+                    SCMN: { x: 212.5, y: 550 },
+                    "OvGU Core": { x: 262.5, y: 500 },
+                    Vienna: { x: 312.5, y: 550 },
+                },
+                },
+        });
+
+        cy.anywherePanning();
+
+        const mtn_toggle = document.getElementById("mtn");
+        const ext_toggle = document.getElementById("ext");
+        const gts_toggle = document.getElementById("gts");
+        const dfn_toggle = document.getElementById("dfn");
+        const viw_toggle = document.getElementById("viw");
+        const g5k_toggle = document.getElementById("g5k");
+        const exo_toggle = document.getElementById("exo");
+
+        let mtn_tip = {
+            "vw0": "top",
+            "vw1": "top",
+            "ams0": "bottom",
+            "ams1": "bottom",
+            "ams2": "bottom",
+            "ams3": "bottom",
+            "ams4": "bottom",
+            "ams5": "bottom",
+            "par0": "right",
+            "par1": "right",
+            "par2": "right",
+            "ham0": "top",
+            "ham1": "top",
+            "ham2": "top",
+            "prg0": "top",
+            "prg1": "top",
+            "dfn0": "bottom",
+            "dfn1": "bottom",
+        };
+
+        let gts_mtn = configuration['GTS maintenance access'];
+        let gts_mtn_tippy = Object.keys(gts_mtn).map((key, _index) => {
+            // Offset to cut out `GTS VPN`
+            return makeTippy(cy, hostname, mtn_tip[hostname], `GTS VPN<br>${gts_mtn[hostname].substring(8)}`);
+        });
+        let dfn_mtn = configuration['DFN maintenance access'];
+        let dfn_mtn_tippy = Object.keys(dfn_mtn).map((key, _index) => {
+            return makeTippy(cy, hostname, mtn_tip[hostname], dfn_mtn[hostname]);
+        });
+        let viw_mtn = configuration['VWall maintenance access'];
+        let viw_mtn_tippy = Object.keys(viw_mtn).map((key, _index) => {
+            return makeTippy(cy, hostname, mtn_tip[hostname], viw_mtn[hostname]);
+        });
+
+        const mtn = gts_mtn_tippy.concat(dfn_mtn_tippy).concat(viw_mtn_tippy);
+        const ext = [
+            makeTippy(cy, "vw0-ams1", "right", "10.1.1.1", "trg"),
+            makeTippy(cy, "sidn0-ams2", "top", "10.1.2.1", "trg"),
+            makeTippy(cy, "sidn1-ams3", "top", "10.1.3.1", "trg"),
+            makeTippy(cy, "KREO NET-ams4", "top", "10.1.4.1", "trg"),
+            makeTippy(cy, "KREO NET-ams5", "top", "10.1.5.1", "trg"),
+            makeTippy(cy, "switch 0-par1", "right", "10.1.6.1", "trg"),
+            makeTippy(cy, "vw1-ams0", "top", "10.1.7.1", "trg"),
+            makeTippy(cy, "Grid 5000-par0", "left", "10.1.8.1", "trg"),
+            makeTippy(cy, "Grid 5000-par2", "left", "10.1.9.1", "trg"),
+            makeTippy(cy, "dfn0-ham0", "bottom", "10.1.10.1", "trg"),
+            makeTippy(cy, "dfn1-ham1", "bottom", "10.1.11.1", "trg"),
+            makeTippy(cy, "switch 1-ham2", "right", "10.1.12.1", "trg"),
+            makeTippy(cy, "prg0-SCMN", "right", "10.1.13.1", "src"),
+            makeTippy(cy, "prg0-OvGU AP", "left", "10.1.19.1", "src"),
+            makeTippy(cy, "prg1-Vienna", "right", "10.1.14.1", "src"),
+            makeTippy(cy, "prg1-OvGU Core", "left", "10.1.20.1", "src"),
+            makeTippy(cy, "vw0-Grid 5000", "left", "10.1.15.2", "src"),
+            makeTippy(cy, "vw0-ams1", "bottom", "10.1.1.2", "src"),
+            makeTippy(cy, "vw0-Exo Geni", "top", "10.1.16.2", "src"),
+            makeTippy(cy, "vw1-Grid 5000", "left", "10.1.17.2", "src"),
+            makeTippy(cy, "vw1-ams0", "bottom", "10.1.7.2", "src"),
+            makeTippy(cy, "vw1-Exo Geni", "top", "10.1.18.2", "src"),
+            makeTippy(cy, "vw0-Exo Geni", "left", "10.1.16.3", "trg"),
+            makeTippy(cy, "vw1-Exo Geni", "left", "10.1.18.3", "trg"),
+            makeTippy(cy, "dfn0-ham0", "top", "10.1.10.4", "src"),
+            makeTippy(cy, "dfn1-ham1", "top", "10.1.11.4", "src"),
+            makeTippy(cy, "sidn0-ams2", "bottom", "10.1.2.5", "src"),
+            makeTippy(cy, "sidn1-ams3", "bottom", "10.1.3.5", "src"),
+            makeTippy(cy, "switch 0-par1", "left", "10.1.6.6", "src"),
+            makeTippy(cy, "switch 1-ham2", "left", "10.1.12.6", "src"),
+            makeTippy(cy, "vw0-Grid 5000", "top", "10.1.15.7", "trg"),
+            makeTippy(cy, "vw1-Grid 5000", "right", "10.1.17.7", "trg"),
+            makeTippy(cy, "Grid 5000-par2", "left", "10.1.9.7", "src"),
+            makeTippy(cy, "Grid 5000-par0", "right", "10.1.8.7", "src"),
+            makeTippy(cy, "KREO NET-ams4", "left", "10.1.4.8", "src"),
+            makeTippy(cy, "KREO NET-ams5", "right", "10.1.5.8", "src"),
+            makeTippy(cy, "prg0-SCMN", "top", "10.1.13.9", "trg"),
+            makeTippy(cy, "prg0-OvGU AP", "top", "10.1.19.10", "trg"),
+            makeTippy(cy, "prg1-Vienna", "top", "10.1.14.11", "trg"),
+            makeTippy(cy, "prg1-OvGU Core", "top", "10.1.20.12", "trg"),
+        ];
+
+        let gts_tip = {
+            "ams0": "bottom",
+            "ams1": "bottom",
+            "ams2": "bottom",
+            "ams3": "bottom",
+            "ams4": "bottom",
+            "ams5": "bottom",
+            "par0": "right",
+            "par1": "right",
+            "par2": "right",
+            "ham0": "top",
+            "ham1": "top",
+            "ham2": "top",
+            "prg0": "top",
+            "prg1": "top",
+        };
+
+        let gts_intern = configuration['GTS internal network'];
+        const gts = Object.keys(gts_intern).map((key, _index) => {
+            return makeTippy(cy, hostname, gts_tip[hostname], gts_intern[hostname]);
+        });
+
+        let dfn_tip = {
+            "dfn0": "bottom",
+            "dfn1": "bottom",
+        };
+        let dfn_intern = configuration['DFN internal network'];
+        const dfn = Object.keys(dfn_intern).map((key, _index) => {
+            return makeTippy(cy, hostname, dfn_tip[hostname], dfn_intern[hostname]);
+        });
+        let viw_tip = {
+            "vw0": "top",
+            "vw1": "top",
+        }
+        let viw_intern = configuration['VWall internal network']
+        const viw = Object.keys(viw_intern).map((key, _index) => {
+            return makeTippy(cy, hostname, viw_tip[hostname], viw_intern[hostname]);
+        });
+
+        // TBD: g5k & exogeni
+        const g5k = [
+        ];
+        const exo = [
+        ];
+
+        mtn_toggle.addEventListener("change", (ev) => {
+            if (ev.target.checked) {
+            mtn.forEach(tip => tip.show());
+            } else {
+            mtn.forEach(tip => tip.hide());
             }
-          },
-          {
-            selector: ":parent",
-            css: {
-              "text-valign": "top",
-              "text-halign": "center",
-              "font-size": "12px",
-              "text-wrap": "none",
+        });
+        ext_toggle.addEventListener("change", (ev) => {
+            if (ev.target.checked) {
+            ext.forEach(tip => tip.show());
+            } else {
+            ext.forEach(tip => tip.hide());
             }
-          },
-          {
-            selector: "edge",
-            css: {
-              "curve-style": "bezier",
+        });
+        gts_toggle.addEventListener("change", (ev) => {
+            if (ev.target.checked) {
+            gts.forEach(tip => tip.show());
+            } else {
+            gts.forEach(tip => tip.hide());
             }
-          }
-        ],
-        elements: {
-          nodes: [
-            { data: { id: "Géant" } },
-            { data: { id: "SIDN" } },
-            { data: { id: "SWITCH" } },
-            { data: { id: "SCMN" } },
-            { data: { id: "Vienna" } },
-            { data: { id: "OvGU Core" } },
-            { data: { id: "OvGU AP" } },
-            { data: { id: "DFN" } },
-            { data: { id: "Exo Geni" } },
-            { data: { id: "Grid 5000" } },
-            { data: { id: "VirtualWall" } },
-            { data: { id: "KREO NET" } },
-            { data: { id: "AMS", parent: "Géant" } },
-            { data: { id: "PAR", parent: "Géant" } },
-            { data: { id: "HAM", parent: "Géant" } },
-            { data: { id: "PRG", parent: "Géant" } },
-            { data: { id: "ams0", parent: "AMS" } },
-            { data: { id: "ams1", parent: "AMS" } },
-            { data: { id: "ams2", parent: "AMS" } },
-            { data: { id: "ams3", parent: "AMS" } },
-            { data: { id: "ams4", parent: "AMS" } },
-            { data: { id: "ams5", parent: "AMS" } },
-            { data: { id: "par0", parent: "PAR" } },
-            { data: { id: "par1", parent: "PAR" } },
-            { data: { id: "par2", parent: "PAR" } },
-            { data: { id: "ham0", parent: "HAM" } },
-            { data: { id: "ham1", parent: "HAM" } },
-            { data: { id: "ham2", parent: "HAM" } },
-            { data: { id: "prg0", parent: "PRG" } },
-            { data: { id: "prg1", parent: "PRG" } },
-            { data: { id: "sidn0", parent: "SIDN" } },
-            { data: { id: "sidn1", parent: "SIDN" } },
-            { data: { id: "switch 0", parent: "SWITCH" } },
-            { data: { id: "switch 1", parent: "SWITCH" } },
-            { data: { id: "dfn0", parent: "DFN" } },
-            { data: { id: "dfn1", parent: "DFN" } },
-            { data: { id: "vw0", parent: "VirtualWall" } },
-            { data: { id: "vw1", parent: "VirtualWall" } },
-          ],
-          edges: [
-            { data: { id: "sidn0-ams2", source: "sidn0", target: "ams2" } },
-            { data: { id: "sidn1-ams3", source: "sidn1", target: "ams3" } },
-            { data: { id: "KREO NET-ams4", source: "KREO NET", target: "ams4" } },
-            { data: { id: "KREO NET-ams5", source: "KREO NET", target: "ams5" } },
-            { data: { id: "switch 0-par1", source: "switch 0", target: "par1" } },
-            { data: { id: "switch 1-ham2", source: "switch 1", target: "ham2" } },
-            { data: { id: "dfn0-ham0", source: "dfn0", target: "ham0" } },
-            { data: { id: "dfn1-ham1", source: "dfn1", target: "ham1" } },
-            { data: { id: "Grid 5000-par0", source: "Grid 5000", target: "par0" } },
-            { data: { id: "Grid 5000-par2", source: "Grid 5000", target: "par2" } },
-            { data: { id: "vw0-ams1", source: "vw0", target: "ams1" } },
-            { data: { id: "vw1-ams0", source: "vw1", target: "ams0" } },
-            { data: { id: "vw0-Exo Geni", source: "vw0", target: "Exo Geni" } },
-            { data: { id: "vw1-Exo Geni", source: "vw1", target: "Exo Geni" } },
-            { data: { id: "vw0-Grid 5000", source: "vw0", target: "Grid 5000" } },
-            { data: { id: "vw1-Grid 5000", source: "vw1", target: "Grid 5000" } },
-            { data: { id: "prg0-SCMN", source: "prg0", target: "SCMN" } },
-            { data: { id: "prg0-OvGU AP", source: "prg0", target: "OvGU AP" } },
-            { data: { id: "prg1-Vienna", source: "prg1", target: "Vienna" } },
-            { data: { id: "prg1-OvGU Core", source: "prg1", target: "OvGU Core" } },
-          ]
-        },
-        layout: {
-          name: "preset",
-          positions: {
-            par0: { x: 125, y: 300 },
-            par1: { x: 125, y: 350 },
-            par2: { x: 125, y: 400 },
-            ams0: { x: 200, y: 300 },
-            ams1: { x: 250, y: 300 },
-            ams2: { x: 300, y: 300 },
-            ams3: { x: 350, y: 300 },
-            ams4: { x: 400, y: 300 },
-            ams5: { x: 450, y: 300 },
-            ham0: { x: 337.5, y: 400 },
-            ham1: { x: 387.5, y: 400 },
-            ham2: { x: 437.5, y: 400 },
-            prg0: { x: 212.5, y: 400 },
-            prg1: { x: 262.5, y: 400 },
-            sidn0: { x: 300, y: 175 },
-            sidn1: { x: 350, y: 175 },
-            "KREO NET": { x: 425, y: 175 },
-            "switch 0": { x: 575, y: 350 },
-            "switch 1": { x: 575, y: 400 },
-            "Grid 5000": { x: 0, y: 300 },
-            "Exo Geni": { x: 175, y: 175 },
-            vw0: { x: 75, y: 150 },
-            vw1: { x: 75, y: 200 },
-            dfn0: { x: 337.5, y: 500 },
-            dfn1: { x: 387.5, y: 500 },
-            "OvGU AP": { x: 162.5, y: 500 },
-            SCMN: { x: 212.5, y: 550 },
-            "OvGU Core": { x: 262.5, y: 500 },
-            Vienna: { x: 312.5, y: 550 },
-          },
-        },
-      });
-      
-      cy.anywherePanning();
-      
-      const mtn_toggle = document.getElementById("mtn");
-      const ext_toggle = document.getElementById("ext");
-      const gts_toggle = document.getElementById("gts");
-      const dfn_toggle = document.getElementById("dfn");
-      const viw_toggle = document.getElementById("viw");
-      const g5k_toggle = document.getElementById("g5k");
-      const exo_toggle = document.getElementById("exo");
-      
-      const mtn = [
-        makeTippy(cy, "vw0", "top", "TBD"),
-        makeTippy(cy, "vw1", "top", "TBD"),
-        makeTippy(cy, "ams0", "bottom", "GTS VPN<br>172.16.0.143"),
-        makeTippy(cy, "ams1", "bottom", "GTS VPN<br>172.16.0.137"),
-        makeTippy(cy, "ams2", "bottom", "GTS VPN<br>172.16.0.146"),
-        makeTippy(cy, "ams3", "bottom", "GTS VPN<br>172.16.0.136"),
-        makeTippy(cy, "ams4", "bottom", "GTS VPN<br>172.16.0.144"),
-        makeTippy(cy, "ams5", "bottom", "GTS VPN<br>172.16.0.142"),
-        makeTippy(cy, "par0", "right", "GTS VPN<br>172.16.0.145"),
-        makeTippy(cy, "par1", "right", "GTS VPN<br>172.16.0.148"),
-        makeTippy(cy, "par2", "right", "GTS VPN<br>172.16.0.147"),
-        makeTippy(cy, "ham0", "top", "GTS VPN<br>172.16.0.141"),
-        makeTippy(cy, "ham1", "top", "GTS VPN<br>172.16.0.139"),
-        makeTippy(cy, "ham2", "top", "GTS VPN<br>172.16.0.149"),
-        makeTippy(cy, "prg0", "top", "GTS VPN<br>172.16.0.138"),
-        makeTippy(cy, "prg1", "top", "GTS VPN<br>172.16.0.140"),
-        makeTippy(cy, "dfn0", "bottom", "TBD"),
-        makeTippy(cy, "dfn1", "bottom", "TBD"),
-      ];
-      const ext = [
-        makeTippy(cy, "vw0-ams1", "right", "10.1.1.1", "trg"),
-        makeTippy(cy, "sidn0-ams2", "top", "10.1.2.1", "trg"),
-        makeTippy(cy, "sidn1-ams3", "top", "10.1.3.1", "trg"),
-        makeTippy(cy, "KREO NET-ams4", "top", "10.1.4.1", "trg"),
-        makeTippy(cy, "KREO NET-ams5", "top", "10.1.5.1", "trg"),
-        makeTippy(cy, "switch 0-par1", "right", "10.1.6.1", "trg"),
-        makeTippy(cy, "vw1-ams0", "top", "10.1.7.1", "trg"),
-        makeTippy(cy, "Grid 5000-par0", "left", "10.1.8.1", "trg"),
-        makeTippy(cy, "Grid 5000-par2", "left", "10.1.9.1", "trg"),
-        makeTippy(cy, "dfn0-ham0", "bottom", "10.1.10.1", "trg"),
-        makeTippy(cy, "dfn1-ham1", "bottom", "10.1.11.1", "trg"),
-        makeTippy(cy, "switch 1-ham2", "right", "10.1.12.1", "trg"),
-        makeTippy(cy, "prg0-SCMN", "right", "10.1.13.1", "src"),
-        makeTippy(cy, "prg0-OvGU AP", "left", "10.1.19.1", "src"),
-        makeTippy(cy, "prg1-Vienna", "right", "10.1.14.1", "src"),
-        makeTippy(cy, "prg1-OvGU Core", "left", "10.1.20.1", "src"),
-        makeTippy(cy, "vw0-Grid 5000", "left", "10.1.15.2", "src"),
-        makeTippy(cy, "vw0-ams1", "bottom", "10.1.1.2", "src"),
-        makeTippy(cy, "vw0-Exo Geni", "top", "10.1.16.2", "src"),
-        makeTippy(cy, "vw1-Grid 5000", "left", "10.1.17.2", "src"),
-        makeTippy(cy, "vw1-ams0", "bottom", "10.1.7.2", "src"),
-        makeTippy(cy, "vw1-Exo Geni", "top", "10.1.18.2", "src"),
-        makeTippy(cy, "vw0-Exo Geni", "left", "10.1.16.3", "trg"),
-        makeTippy(cy, "vw1-Exo Geni", "left", "10.1.18.3", "trg"),
-        makeTippy(cy, "dfn0-ham0", "top", "10.1.10.4", "src"),
-        makeTippy(cy, "dfn1-ham1", "top", "10.1.11.4", "src"),
-        makeTippy(cy, "sidn0-ams2", "bottom", "10.1.2.5", "src"),
-        makeTippy(cy, "sidn1-ams3", "bottom", "10.1.3.5", "src"),
-        makeTippy(cy, "switch 0-par1", "left", "10.1.6.6", "src"),
-        makeTippy(cy, "switch 1-ham2", "left", "10.1.12.6", "src"),
-        makeTippy(cy, "vw0-Grid 5000", "top", "10.1.15.7", "trg"),
-        makeTippy(cy, "vw1-Grid 5000", "right", "10.1.17.7", "trg"),
-        makeTippy(cy, "Grid 5000-par2", "left", "10.1.9.7", "src"),
-        makeTippy(cy, "Grid 5000-par0", "right", "10.1.8.7", "src"),
-        makeTippy(cy, "KREO NET-ams4", "left", "10.1.4.8", "src"),
-        makeTippy(cy, "KREO NET-ams5", "right", "10.1.5.8", "src"),
-        makeTippy(cy, "prg0-SCMN", "top", "10.1.13.9", "trg"),
-        makeTippy(cy, "prg0-OvGU AP", "top", "10.1.19.10", "trg"),
-        makeTippy(cy, "prg1-Vienna", "top", "10.1.14.11", "trg"),
-        makeTippy(cy, "prg1-OvGU Core", "top", "10.1.20.12", "trg"),
-      ];
-      const gts = [
-        makeTippy(cy, "ams0", "bottom", "10.42.42.1"),
-        makeTippy(cy, "ams1", "bottom", "10.42.42.2"),
-        makeTippy(cy, "ams2", "bottom", "10.42.42.3"),
-        makeTippy(cy, "ams3", "bottom", "10.42.42.4"),
-        makeTippy(cy, "ams4", "bottom", "10.42.42.5"),
-        makeTippy(cy, "ams5", "bottom", "10.42.42.6"),
-        makeTippy(cy, "par0", "right", "10.42.42.7"),
-        makeTippy(cy, "par1", "right", "10.42.42.8"),
-        makeTippy(cy, "par2", "right", "10.42.42.9"),
-        makeTippy(cy, "ham0", "top", "10.42.42.10"),
-        makeTippy(cy, "ham1", "top", "10.42.42.11"),
-        makeTippy(cy, "ham2", "top", "10.42.42.12"),
-        makeTippy(cy, "prg0", "top", "10.42.42.13"),
-        makeTippy(cy, "prg1", "top", "10.42.42.14"),
-      ];
-      const dfn = [
-        makeTippy(cy, "dfn0", "bottom", "10.43.43.1"),
-        makeTippy(cy, "dfn1", "bottom", "10.43.43.2"),
-      ];
-      const viw = [
-        makeTippy(cy, "vw0", "top", "10.44.44.1"),
-        makeTippy(cy, "vw1", "top", "10.44.44.2"),
-      ];
-      const g5k = [
-      ];
-      const exo = [
-      ];
-      
-      mtn_toggle.addEventListener("change", (ev) => {
-        if (ev.target.checked) {
-          mtn.forEach(tip => tip.show());
-        } else {
-          mtn.forEach(tip => tip.hide());
-        }
-      });
-      ext_toggle.addEventListener("change", (ev) => {
-        if (ev.target.checked) {
-          ext.forEach(tip => tip.show());
-        } else {
-          ext.forEach(tip => tip.hide());
-        }
-      });
-      gts_toggle.addEventListener("change", (ev) => {
-        if (ev.target.checked) {
-          gts.forEach(tip => tip.show());
-        } else {
-          gts.forEach(tip => tip.hide());
-        }
-      });
-      dfn_toggle.addEventListener("change", (ev) => {
-        if (ev.target.checked) {
-          dfn.forEach(tip => tip.show());
-        } else {
-          dfn.forEach(tip => tip.hide());
-        }
-      });
-      viw_toggle.addEventListener("change", (ev) => {
-        if (ev.target.checked) {
-          viw.forEach(tip => tip.show());
-        } else {
-          viw.forEach(tip => tip.hide());
-        }
-      });
-      g5k_toggle.addEventListener("change", (ev) => {
-        if (ev.target.checked) {
-          g5k.forEach(tip => tip.show());
-        } else {
-          g5k.forEach(tip => tip.hide());
-        }
-      });
-      exo_toggle.addEventListener("change", (ev) => {
-        if (ev.target.checked) {
-          exo.forEach(tip => tip.show());
-        } else {
-          exo.forEach(tip => tip.hide());
-        }
-      });
-      
-      window.cy = cy;
+        });
+        dfn_toggle.addEventListener("change", (ev) => {
+            if (ev.target.checked) {
+            dfn.forEach(tip => tip.show());
+            } else {
+            dfn.forEach(tip => tip.hide());
+            }
+        });
+        viw_toggle.addEventListener("change", (ev) => {
+            if (ev.target.checked) {
+            viw.forEach(tip => tip.show());
+            } else {
+            viw.forEach(tip => tip.hide());
+            }
+        });
+        g5k_toggle.addEventListener("change", (ev) => {
+            if (ev.target.checked) {
+            g5k.forEach(tip => tip.show());
+            } else {
+            g5k.forEach(tip => tip.hide());
+            }
+        });
+        exo_toggle.addEventListener("change", (ev) => {
+            if (ev.target.checked) {
+            exo.forEach(tip => tip.show());
+            } else {
+            exo.forEach(tip => tip.hide());
+            }
+        });
+
+        window.cy = cy;
+    });
     </script>
   </body>
 </html>
