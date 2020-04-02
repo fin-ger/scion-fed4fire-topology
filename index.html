@@ -209,6 +209,8 @@
                     { data: { id: "switch 1", parent: "SWITCH" } },
                     { data: { id: "dfn0", parent: "DFN" } },
                     { data: { id: "dfn1", parent: "DFN" } },
+                    { data: { id: "dfn2", parent: "DFN" } },
+                    { data: { id: "dfn3", parent: "DFN" } },
                     { data: { id: "vw0", parent: "VirtualWall" } },
                     { data: { id: "vw1", parent: "VirtualWall" } },
                 ],
@@ -261,8 +263,10 @@
                     "Exo Geni": { x: 175, y: 175 },
                     vw0: { x: 75, y: 150 },
                     vw1: { x: 75, y: 200 },
-                    dfn0: { x: 337.5, y: 500 },
-                    dfn1: { x: 387.5, y: 500 },
+                    dfn0: { x: 387.5, y: 500 },
+                    dfn1: { x: 437.5, y: 500 },
+                    dfn2: { x: 387.5, y: 550 },
+                    dfn3: { x: 437.5, y: 550 },
                     "OvGU AP": { x: 162.5, y: 500 },
                     SCMN: { x: 212.5, y: 550 },
                     "OvGU Core": { x: 262.5, y: 500 },
@@ -300,6 +304,8 @@
             "prg1": "top",
             "dfn0": "bottom",
             "dfn1": "bottom",
+            "dfn2": "bottom",
+            "dfn3": "bottom",
         };
 
         let gts_mtn = configuration['GTS maintenance access'];
@@ -385,6 +391,8 @@
         let dfn_tip = {
             "dfn0": "bottom",
             "dfn1": "bottom",
+            "dfn2": "bottom",
+            "dfn3": "bottom",
         };
         let dfn_intern = configuration['DFN internal network'];
         const dfn = Object.keys(dfn_intern).map((hostname, _index) => {

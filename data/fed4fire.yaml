@@ -41,10 +41,14 @@ VWall maintenance access:
 DFN internal network:
   dfn0: 10.43.43.1
   dfn1: 10.43.43.2
+  dfn2: 10.43.43.3
+  dfn3: 10.43.43.4
 
 DFN maintenance access:
-  dfn0: TBD
-  dfn1: TBD
+  dfn0: DFN VPN 172.16.0.20
+  dfn1: DFN VPN 172.16.0.19
+  dfn2: DFN VPN 172.16.0.21
+  dfn3: DFN VPN 172.16.0.22
 
 Grid5000 internal network:
   g5k0: 1.2.3.4
