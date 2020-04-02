@@ -312,7 +312,7 @@
         });
         let dfn_mtn = configuration['DFN maintenance access'];
         let dfn_mtn_tippy = Object.keys(dfn_mtn).map((hostname, _index) => {
-            return makeTippy(cy, hostname, mtn_tip[hostname], dfn_mtn[hostname]);
+            return makeTippy(cy, hostname, mtn_tip[hostname], `DFN VPN<br>${dfn_mtn[hostname].substring(8)}`);
         });
         let viw_mtn = configuration['VWall maintenance access'];
         let viw_mtn_tippy = Object.keys(viw_mtn).map((hostname, _index) => {
