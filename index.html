@@ -7,6 +7,23 @@
     <meta name="description" content="Interactive SCIONlab Network Topology">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script src="node_modules/cytoscape/dist/cytoscape.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.js"></script>
+    <script src="node_modules/cytoscape-popper/cytoscape-popper.js"></script>
+    <script src="node_modules/tippy.js/dist/tippy-bundle.iife.js"></script>
+    <script src="node_modules/cytoscape-anywhere-panning/dist/index.js"></script>
+
+    <script defer src="node_modules/es-module-shims/dist/es-module-shims.min.js"></script>
+    <script type="importmap-shim" src="importmap.json"></script>
+    <script type="module-shim">
+      import "@polymer/paper-toggle-button";
+      import "@polymer/paper-card";
+      import "@polymer/paper-button";
+    </script>
+
+    <link rel="stylesheet" href="node_modules/tippy.js/dist/tippy.css" />
+    <link rel="stylesheet" href="node_modules/tippy.js/themes/translucent.css" />
+
     <style>
       body, html {
         margin: 0;
@@ -25,26 +42,16 @@
         bottom: 0;
         left: 0;
         z-index: 99999;
+      }
+
+      #menu .card-content {
         line-height: 2em;
       }
+
+      .tippy-tooltip {
+        font-size: 12px;
+      }
     </style>
-
-    <script src="node_modules/cytoscape/dist/cytoscape.min.js"></script>
-    <script src="node_modules/popper.js/dist/umd/popper.js"></script>
-    <script src="node_modules/cytoscape-popper/cytoscape-popper.js"></script>
-    <script src="node_modules/tippy.js/dist/tippy-bundle.iife.min.js"></script>
-    <script src="node_modules/cytoscape-anywhere-panning/dist/index.js"></script>
-
-    <script defer src="node_modules/es-module-shims/dist/es-module-shims.min.js"></script>
-    <script type="importmap-shim" src="importmap.json"></script>
-    <script type="module-shim">
-      import "@polymer/paper-toggle-button";
-      import "@polymer/paper-card";
-      import "@polymer/paper-button";
-    </script>
-
-    <link rel="stylesheet" href="node_modules/tippy.js/dist/tippy.css" />
-    <link rel="stylesheet" href="node_modules/tippy.js/themes/translucent.css" />
   </head>
 
   <body>
@@ -57,12 +64,10 @@
         <paper-toggle-button id="viw">AS VirtualWall Internal Network</paper-toggle-button>
         <paper-toggle-button id="g5k" disabled>AS Grid5000 Internal Network</paper-toggle-button>
         <paper-toggle-button id="exo" disabled>AS ExoGeni Internal Network</paper-toggle-button>
-        <a href="/scionlab-fed4fire-topology/data/fed4fire.json" style="text-decoration: none;">
-          <paper-button>Export JSON</paper-button>
-        </a>
-        <a href="/scionlab-fed4fire-topology/data/fed4fire.yaml" style="text-decoration: none;">
-          <paper-button>Export YAML</paper-button>
-        </a>
+      </div>
+      <div class="card-actions">
+        <a href="data/fed4fire.json" tabindex="-1"><paper-button>Export JSON</paper-button></a>
+        <a href="data/fed4fire.yaml" tabindex="-1"><paper-button>Export YAML</paper-button></a>
       </div>
     </paper-card>
 
@@ -107,220 +112,222 @@
         let dummyDomEle = document.createElement('div');
 
         let tip = tippy(dummyDomEle, {
-           onCreate: (instance) => { // mandatory
-             // patch the tippy's popper reference so positioning works
-             // https://atomiks.github.io/tippyjs/misc/#custom-position
-             instance.popperInstance.reference = ref;
-           },
-           lazy: false, // mandatory
-           trigger: 'manual', // mandatory
+          onCreate: (instance) => { // mandatory
+            // patch the tippy's popper reference so positioning works
+            // https://atomiks.github.io/tippyjs/misc/#custom-position
+            instance.popperInstance.reference = ref;
+          },
+          lazy: false, // mandatory
+          trigger: 'manual', // mandatory
 
-           // dom element inside the tippy:
-           content: () => {
-             let div = document.createElement('div');
-             div.innerHTML = text;
-             return div;
-           },
+          // dom element inside the tippy:
+          content: () => {
+            let div = document.createElement('div');
+            div.innerHTML = text;
+            return div;
+          },
 
-           // your own preferences:
-           arrow: true,
-           placement: placement,
-           hideOnClick: false,
-           multiple: true,
-           offset: offset,
-           sticky: true,
-           theme: "translucent",
+          // your own preferences:
+          arrow: true,
+          interactive: true,
+          appendTo: document.body,
+          placement: placement,
+          hideOnClick: false,
+          multiple: true,
+          offset: offset,
+          sticky: true,
+          theme: "translucent",
         });
 
         return tip;
       }
-     fetch('/scionlab-fed4fire-topology/data/fed4fire.json')
-    .then((response) => {
-        return response.json();
-    })
-     .then((configuration) => {
-        const cy = cytoscape({
-                container: document.getElementById("cy"),
-                wheelSensitivity: 0.25,
-                autoungrabify: true,
-                style: [
-                {
-                    selector: "node",
-                    css: {
-                    "content": "data(id)",
-                    "text-valign": "center",
-                    "text-halign": "center",
-                    "font-size": "8px",
-                    "text-wrap": "wrap",
-                    "text-max-width": "25px",
-                    }
-                },
-                {
-                    selector: ":parent",
-                    css: {
-                    "text-valign": "top",
-                    "text-halign": "center",
-                    "font-size": "12px",
-                    "text-wrap": "none",
-                    }
-                },
-                {
-                    selector: "edge",
-                    css: {
-                    "curve-style": "bezier",
-                    }
+      fetch('data/fed4fire.json')
+        .then((response) => {
+          return response.json();
+        })
+        .then((configuration) => {
+          const cy = cytoscape({
+            container: document.getElementById("cy"),
+            wheelSensitivity: 0.25,
+            autoungrabify: true,
+            style: [
+              {
+                selector: "node",
+                css: {
+                  "content": "data(id)",
+                  "text-valign": "center",
+                  "text-halign": "center",
+                  "font-size": "8px",
+                  "text-wrap": "wrap",
+                  "text-max-width": "25px",
                 }
-                ],
-                elements: {
-                nodes: [
-                    { data: { id: "Géant" } },
-                    { data: { id: "SIDN" } },
-                    { data: { id: "SWITCH" } },
-                    { data: { id: "SCMN" } },
-                    { data: { id: "Vienna" } },
-                    { data: { id: "OvGU Core" } },
-                    { data: { id: "OvGU AP" } },
-                    { data: { id: "DFN" } },
-                    { data: { id: "Exo Geni" } },
-                    { data: { id: "Grid 5000" } },
-                    { data: { id: "VirtualWall" } },
-                    { data: { id: "KREO NET" } },
-                    { data: { id: "AMS", parent: "Géant" } },
-                    { data: { id: "PAR", parent: "Géant" } },
-                    { data: { id: "HAM", parent: "Géant" } },
-                    { data: { id: "PRG", parent: "Géant" } },
-                    { data: { id: "ams0", parent: "AMS" } },
-                    { data: { id: "ams1", parent: "AMS" } },
-                    { data: { id: "ams2", parent: "AMS" } },
-                    { data: { id: "ams3", parent: "AMS" } },
-                    { data: { id: "ams4", parent: "AMS" } },
-                    { data: { id: "ams5", parent: "AMS" } },
-                    { data: { id: "par0", parent: "PAR" } },
-                    { data: { id: "par1", parent: "PAR" } },
-                    { data: { id: "par2", parent: "PAR" } },
-                    { data: { id: "ham0", parent: "HAM" } },
-                    { data: { id: "ham1", parent: "HAM" } },
-                    { data: { id: "ham2", parent: "HAM" } },
-                    { data: { id: "prg0", parent: "PRG" } },
-                    { data: { id: "prg1", parent: "PRG" } },
-                    { data: { id: "sidn0", parent: "SIDN" } },
-                    { data: { id: "sidn1", parent: "SIDN" } },
-                    { data: { id: "dfn0", parent: "DFN" } },
-                    { data: { id: "dfn1", parent: "DFN" } },
-                    { data: { id: "dfn2", parent: "DFN" } },
-                    { data: { id: "dfn3", parent: "DFN" } },
-                    { data: { id: "vw0", parent: "VirtualWall" } },
-                    { data: { id: "vw1", parent: "VirtualWall" } },
-                ],
-                edges: [
-                    { data: { id: "sidn0-ams2", source: "sidn0", target: "ams2" } },
-                    { data: { id: "sidn1-ams3", source: "sidn1", target: "ams3" } },
-                    { data: { id: "KREO NET-ams4", source: "KREO NET", target: "ams4" } },
-                    { data: { id: "KREO NET-ams5", source: "KREO NET", target: "ams5" } },
-                    { data: { id: "SWITCH-par1", source: "SWITCH", target: "par1" } },
-                    { data: { id: "SWITCH-ham2", source: "SWITCH", target: "ham2" } },
-                    { data: { id: "dfn0-ham0", source: "dfn0", target: "ham0" } },
-                    { data: { id: "dfn1-ham1", source: "dfn1", target: "ham1" } },
-                    { data: { id: "Grid 5000-par0", source: "Grid 5000", target: "par0" } },
-                    { data: { id: "Grid 5000-par2", source: "Grid 5000", target: "par2" } },
-                    { data: { id: "vw0-ams1", source: "vw0", target: "ams1" } },
-                    { data: { id: "vw1-ams0", source: "vw1", target: "ams0" } },
-                    { data: { id: "vw0-Exo Geni", source: "vw0", target: "Exo Geni" } },
-                    { data: { id: "vw1-Exo Geni", source: "vw1", target: "Exo Geni" } },
-                    { data: { id: "vw0-Grid 5000", source: "vw0", target: "Grid 5000" } },
-                    { data: { id: "vw1-Grid 5000", source: "vw1", target: "Grid 5000" } },
-                    { data: { id: "prg0-SCMN", source: "prg0", target: "SCMN" } },
-                    { data: { id: "prg0-OvGU AP", source: "prg0", target: "OvGU AP" } },
-                    { data: { id: "prg1-Vienna", source: "prg1", target: "Vienna" } },
-                    { data: { id: "prg1-OvGU Core", source: "prg1", target: "OvGU Core" } },
-                ]
-                },
-                layout: {
-                name: "preset",
-                positions: {
-                    par0: { x: 125, y: 300 },
-                    par1: { x: 125, y: 350 },
-                    par2: { x: 125, y: 400 },
-                    ams0: { x: 200, y: 300 },
-                    ams1: { x: 250, y: 300 },
-                    ams2: { x: 300, y: 300 },
-                    ams3: { x: 350, y: 300 },
-                    ams4: { x: 400, y: 300 },
-                    ams5: { x: 450, y: 300 },
-                    ham0: { x: 337.5, y: 400 },
-                    ham1: { x: 387.5, y: 400 },
-                    ham2: { x: 437.5, y: 400 },
-                    prg0: { x: 212.5, y: 400 },
-                    prg1: { x: 262.5, y: 400 },
-                    sidn0: { x: 300, y: 175 },
-                    sidn1: { x: 350, y: 175 },
-                    "KREO NET": { x: 425, y: 175 },
-                    SWITCH: { x: 575, y: 350 },
-                    "Grid 5000": { x: 0, y: 300 },
-                    "Exo Geni": { x: 175, y: 175 },
-                    vw0: { x: 75, y: 150 },
-                    vw1: { x: 75, y: 200 },
-                    dfn0: { x: 387.5, y: 500 },
-                    dfn1: { x: 437.5, y: 500 },
-                    dfn2: { x: 387.5, y: 550 },
-                    dfn3: { x: 437.5, y: 550 },
-                    "OvGU AP": { x: 162.5, y: 500 },
-                    SCMN: { x: 212.5, y: 550 },
-                    "OvGU Core": { x: 262.5, y: 500 },
-                    Vienna: { x: 312.5, y: 550 },
-                },
-                },
-        });
+              },
+              {
+                selector: ":parent",
+                css: {
+                  "text-valign": "top",
+                  "text-halign": "center",
+                  "font-size": "12px",
+                  "text-wrap": "none",
+                }
+              },
+              {
+                selector: "edge",
+                css: {
+                  "curve-style": "bezier",
+                }
+              }
+            ],
+            elements: {
+              nodes: [
+                { data: { id: "Géant" } },
+                { data: { id: "SIDN" } },
+                { data: { id: "SWITCH" } },
+                { data: { id: "SCMN" } },
+                { data: { id: "Vienna" } },
+                { data: { id: "OvGU Core" } },
+                { data: { id: "OvGU AP" } },
+                { data: { id: "DFN" } },
+                { data: { id: "Exo Geni" } },
+                { data: { id: "Grid 5000" } },
+                { data: { id: "VirtualWall" } },
+                { data: { id: "KREO NET" } },
+                { data: { id: "AMS", parent: "Géant" } },
+                { data: { id: "PAR", parent: "Géant" } },
+                { data: { id: "HAM", parent: "Géant" } },
+                { data: { id: "PRG", parent: "Géant" } },
+                { data: { id: "ams0", parent: "AMS" } },
+                { data: { id: "ams1", parent: "AMS" } },
+                { data: { id: "ams2", parent: "AMS" } },
+                { data: { id: "ams3", parent: "AMS" } },
+                { data: { id: "ams4", parent: "AMS" } },
+                { data: { id: "ams5", parent: "AMS" } },
+                { data: { id: "par0", parent: "PAR" } },
+                { data: { id: "par1", parent: "PAR" } },
+                { data: { id: "par2", parent: "PAR" } },
+                { data: { id: "ham0", parent: "HAM" } },
+                { data: { id: "ham1", parent: "HAM" } },
+                { data: { id: "ham2", parent: "HAM" } },
+                { data: { id: "prg0", parent: "PRG" } },
+                { data: { id: "prg1", parent: "PRG" } },
+                { data: { id: "sidn0", parent: "SIDN" } },
+                { data: { id: "sidn1", parent: "SIDN" } },
+                { data: { id: "dfn0", parent: "DFN" } },
+                { data: { id: "dfn1", parent: "DFN" } },
+                { data: { id: "dfn2", parent: "DFN" } },
+                { data: { id: "dfn3", parent: "DFN" } },
+                { data: { id: "vw0", parent: "VirtualWall" } },
+                { data: { id: "vw1", parent: "VirtualWall" } },
+              ],
+              edges: [
+                { data: { id: "sidn0-ams2", source: "sidn0", target: "ams2" } },
+                { data: { id: "sidn1-ams3", source: "sidn1", target: "ams3" } },
+                { data: { id: "KREO NET-ams4", source: "KREO NET", target: "ams4" } },
+                { data: { id: "KREO NET-ams5", source: "KREO NET", target: "ams5" } },
+                { data: { id: "SWITCH-par1", source: "SWITCH", target: "par1" } },
+                { data: { id: "SWITCH-ham2", source: "SWITCH", target: "ham2" } },
+                { data: { id: "dfn0-ham0", source: "dfn0", target: "ham0" } },
+                { data: { id: "dfn1-ham1", source: "dfn1", target: "ham1" } },
+                { data: { id: "Grid 5000-par0", source: "Grid 5000", target: "par0" } },
+                { data: { id: "Grid 5000-par2", source: "Grid 5000", target: "par2" } },
+                { data: { id: "vw0-ams1", source: "vw0", target: "ams1" } },
+                { data: { id: "vw1-ams0", source: "vw1", target: "ams0" } },
+                { data: { id: "vw0-Exo Geni", source: "vw0", target: "Exo Geni" } },
+                { data: { id: "vw1-Exo Geni", source: "vw1", target: "Exo Geni" } },
+                { data: { id: "vw0-Grid 5000", source: "vw0", target: "Grid 5000" } },
+                { data: { id: "vw1-Grid 5000", source: "vw1", target: "Grid 5000" } },
+                { data: { id: "prg0-SCMN", source: "prg0", target: "SCMN" } },
+                { data: { id: "prg0-OvGU AP", source: "prg0", target: "OvGU AP" } },
+                { data: { id: "prg1-Vienna", source: "prg1", target: "Vienna" } },
+                { data: { id: "prg1-OvGU Core", source: "prg1", target: "OvGU Core" } },
+              ]
+            },
+            layout: {
+              name: "preset",
+              positions: {
+                par0: { x: 125, y: 300 },
+                par1: { x: 125, y: 350 },
+                par2: { x: 125, y: 400 },
+                ams0: { x: 200, y: 300 },
+                ams1: { x: 250, y: 300 },
+                ams2: { x: 300, y: 300 },
+                ams3: { x: 350, y: 300 },
+                ams4: { x: 400, y: 300 },
+                ams5: { x: 450, y: 300 },
+                ham0: { x: 337.5, y: 400 },
+                ham1: { x: 387.5, y: 400 },
+                ham2: { x: 437.5, y: 400 },
+                prg0: { x: 212.5, y: 400 },
+                prg1: { x: 262.5, y: 400 },
+                sidn0: { x: 300, y: 175 },
+                sidn1: { x: 350, y: 175 },
+                "KREO NET": { x: 425, y: 175 },
+                SWITCH: { x: 575, y: 350 },
+                "Grid 5000": { x: 0, y: 300 },
+                "Exo Geni": { x: 175, y: 175 },
+                vw0: { x: 75, y: 150 },
+                vw1: { x: 75, y: 200 },
+                dfn0: { x: 387.5, y: 500 },
+                dfn1: { x: 437.5, y: 500 },
+                dfn2: { x: 387.5, y: 550 },
+                dfn3: { x: 437.5, y: 550 },
+                "OvGU AP": { x: 162.5, y: 500 },
+                SCMN: { x: 212.5, y: 550 },
+                "OvGU Core": { x: 262.5, y: 500 },
+                Vienna: { x: 312.5, y: 550 },
+              },
+            },
+          });
 
-        cy.anywherePanning();
+          cy.anywherePanning();
 
-        const mtn_toggle = document.getElementById("mtn");
-        const ext_toggle = document.getElementById("ext");
-        const gts_toggle = document.getElementById("gts");
-        const dfn_toggle = document.getElementById("dfn");
-        const viw_toggle = document.getElementById("viw");
-        const g5k_toggle = document.getElementById("g5k");
-        const exo_toggle = document.getElementById("exo");
+          const mtn_toggle = document.getElementById("mtn");
+          const ext_toggle = document.getElementById("ext");
+          const gts_toggle = document.getElementById("gts");
+          const dfn_toggle = document.getElementById("dfn");
+          const viw_toggle = document.getElementById("viw");
+          const g5k_toggle = document.getElementById("g5k");
+          const exo_toggle = document.getElementById("exo");
 
-        let mtn_tip = {
-            "vw0": "top",
-            "vw1": "top",
-            "ams0": "bottom",
-            "ams1": "bottom",
-            "ams2": "bottom",
-            "ams3": "bottom",
-            "ams4": "bottom",
-            "ams5": "bottom",
-            "par0": "right",
-            "par1": "right",
-            "par2": "right",
-            "ham0": "top",
-            "ham1": "top",
-            "ham2": "top",
-            "prg0": "top",
-            "prg1": "top",
+          let mtn_tip = {
+            "vw0": "bottom",
+            "vw1": "bottom",
+            "ams0": "top",
+            "ams1": "top",
+            "ams2": "top",
+            "ams3": "top",
+            "ams4": "top",
+            "ams5": "top",
+            "par0": "left",
+            "par1": "left",
+            "par2": "left",
+            "ham0": "bottom",
+            "ham1": "bottom",
+            "ham2": "bottom",
+            "prg0": "bottom",
+            "prg1": "bottom",
             "dfn0": "top",
             "dfn1": "top",
             "dfn2": "top",
             "dfn3": "top",
-        };
+          };
 
-        let gts_mtn = configuration['GTS maintenance access'];
-        let gts_mtn_tippy = Object.keys(gts_mtn).map((hostname, _index) => {
+          let gts_mtn = configuration['GTS maintenance access'];
+          let gts_mtn_tippy = Object.keys(gts_mtn).map((hostname, _index) => {
             // Offset to cut out `GTS VPN`
             return makeTippy(cy, hostname, mtn_tip[hostname], `GTS VPN<br>${gts_mtn[hostname].substring(8)}`);
-        });
-        let dfn_mtn = configuration['DFN maintenance access'];
-        let dfn_mtn_tippy = Object.keys(dfn_mtn).map((hostname, _index) => {
+          });
+          let dfn_mtn = configuration['DFN maintenance access'];
+          let dfn_mtn_tippy = Object.keys(dfn_mtn).map((hostname, _index) => {
             return makeTippy(cy, hostname, mtn_tip[hostname], `DFN VPN<br>${dfn_mtn[hostname].substring(8)}`);
-        });
-        let viw_mtn = configuration['VWall maintenance access'];
-        let viw_mtn_tippy = Object.keys(viw_mtn).map((hostname, _index) => {
+          });
+          let viw_mtn = configuration['VWall maintenance access'];
+          let viw_mtn_tippy = Object.keys(viw_mtn).map((hostname, _index) => {
             return makeTippy(cy, hostname, mtn_tip[hostname], viw_mtn[hostname]);
-        });
+          });
 
-        const mtn = gts_mtn_tippy.concat(dfn_mtn_tippy).concat(viw_mtn_tippy);
-        const ext = [
+          const mtn = gts_mtn_tippy.concat(dfn_mtn_tippy).concat(viw_mtn_tippy);
+          const ext = [
             makeTippy(cy, "vw0-ams1", "right", "10.1.1.1", "trg"),
             makeTippy(cy, "sidn0-ams2", "top", "10.1.2.1", "trg"),
             makeTippy(cy, "sidn1-ams3", "top", "10.1.3.1", "trg"),
@@ -328,42 +335,42 @@
             makeTippy(cy, "KREO NET-ams5", "top", "10.1.5.1", "trg"),
             makeTippy(cy, "SWITCH-par1", "right", "10.1.6.1", "trg"),
             makeTippy(cy, "vw1-ams0", "top", "10.1.7.1", "trg"),
-            makeTippy(cy, "Grid 5000-par0", "left", "10.1.8.1", "trg"),
-            makeTippy(cy, "Grid 5000-par2", "left", "10.1.9.1", "trg"),
+            makeTippy(cy, "Grid 5000-par0", "bottom", "10.1.8.1", "trg"),
+            makeTippy(cy, "Grid 5000-par2", "bottom", "10.1.9.1", "trg"),
             makeTippy(cy, "dfn0-ham0", "bottom", "10.1.10.1", "trg"),
             makeTippy(cy, "dfn1-ham1", "bottom", "10.1.11.1", "trg"),
-            makeTippy(cy, "SWITCH-ham2", "right", "10.1.12.1", "trg"),
-            makeTippy(cy, "prg0-SCMN", "right", "10.1.13.1", "src"),
+            makeTippy(cy, "SWITCH-ham2", "bottom", "10.1.12.1", "trg"),
+            makeTippy(cy, "prg0-SCMN", "bottom", "10.1.13.1", "src"),
             makeTippy(cy, "prg0-OvGU AP", "left", "10.1.19.1", "src"),
             makeTippy(cy, "prg1-Vienna", "right", "10.1.14.1", "src"),
-            makeTippy(cy, "prg1-OvGU Core", "left", "10.1.20.1", "src"),
+            makeTippy(cy, "prg1-OvGU Core", "top", "10.1.20.1", "src"),
             makeTippy(cy, "vw0-Grid 5000", "left", "10.1.15.2", "src"),
             makeTippy(cy, "vw0-ams1", "bottom", "10.1.1.2", "src"),
             makeTippy(cy, "vw0-Exo Geni", "top", "10.1.16.2", "src"),
             makeTippy(cy, "vw1-Grid 5000", "left", "10.1.17.2", "src"),
             makeTippy(cy, "vw1-ams0", "bottom", "10.1.7.2", "src"),
-            makeTippy(cy, "vw1-Exo Geni", "top", "10.1.18.2", "src"),
-            makeTippy(cy, "vw0-Exo Geni", "left", "10.1.16.3", "trg"),
-            makeTippy(cy, "vw1-Exo Geni", "left", "10.1.18.3", "trg"),
+            makeTippy(cy, "vw1-Exo Geni", "bottom", "10.1.18.2", "src"),
+            makeTippy(cy, "vw0-Exo Geni", "top", "10.1.16.3", "trg"),
+            makeTippy(cy, "vw1-Exo Geni", "bottom", "10.1.18.3", "trg"),
             makeTippy(cy, "dfn0-ham0", "top", "10.1.10.4", "src"),
             makeTippy(cy, "dfn1-ham1", "top", "10.1.11.4", "src"),
             makeTippy(cy, "sidn0-ams2", "bottom", "10.1.2.5", "src"),
             makeTippy(cy, "sidn1-ams3", "bottom", "10.1.3.5", "src"),
             makeTippy(cy, "SWITCH-par1", "left", "10.1.6.6", "src"),
-            makeTippy(cy, "SWITCH-ham2", "left", "10.1.12.6", "src"),
+            makeTippy(cy, "SWITCH-ham2", "bottom", "10.1.12.6", "src"),
             makeTippy(cy, "vw0-Grid 5000", "top", "10.1.15.7", "trg"),
             makeTippy(cy, "vw1-Grid 5000", "right", "10.1.17.7", "trg"),
-            makeTippy(cy, "Grid 5000-par2", "left", "10.1.9.7", "src"),
-            makeTippy(cy, "Grid 5000-par0", "right", "10.1.8.7", "src"),
+            makeTippy(cy, "Grid 5000-par2", "bottom", "10.1.9.7", "src"),
+            makeTippy(cy, "Grid 5000-par0", "bottom", "10.1.8.7", "src"),
             makeTippy(cy, "KREO NET-ams4", "left", "10.1.4.8", "src"),
             makeTippy(cy, "KREO NET-ams5", "right", "10.1.5.8", "src"),
             makeTippy(cy, "prg0-SCMN", "top", "10.1.13.9", "trg"),
             makeTippy(cy, "prg0-OvGU AP", "top", "10.1.19.10", "trg"),
             makeTippy(cy, "prg1-Vienna", "top", "10.1.14.11", "trg"),
             makeTippy(cy, "prg1-OvGU Core", "top", "10.1.20.12", "trg"),
-        ];
+          ];
 
-        let gts_tip = {
+          let gts_tip = {
             "ams0": "bottom",
             "ams1": "bottom",
             "ams2": "bottom",
@@ -378,90 +385,90 @@
             "ham2": "top",
             "prg0": "top",
             "prg1": "top",
-        };
+          };
 
-        let gts_intern = configuration['GTS internal network'];
-        const gts = Object.keys(gts_intern).map((hostname, _index) => {
+          let gts_intern = configuration['GTS internal network'];
+          const gts = Object.keys(gts_intern).map((hostname, _index) => {
             return makeTippy(cy, hostname, gts_tip[hostname], gts_intern[hostname]);
-        });
+          });
 
-        let dfn_tip = {
+          let dfn_tip = {
             "dfn0": "top",
             "dfn1": "top",
             "dfn2": "top",
             "dfn3": "top",
-        };
-        let dfn_intern = configuration['DFN internal network'];
-        const dfn = Object.keys(dfn_intern).map((hostname, _index) => {
+          };
+          let dfn_intern = configuration['DFN internal network'];
+          const dfn = Object.keys(dfn_intern).map((hostname, _index) => {
             return makeTippy(cy, hostname, dfn_tip[hostname], dfn_intern[hostname]);
-        });
-        let viw_tip = {
+          });
+          let viw_tip = {
             "vw0": "top",
             "vw1": "top",
-        }
-        let viw_intern = configuration['VWall internal network']
-        const viw = Object.keys(viw_intern).map((hostname, _index) => {
+          }
+          let viw_intern = configuration['VWall internal network']
+          const viw = Object.keys(viw_intern).map((hostname, _index) => {
             return makeTippy(cy, hostname, viw_tip[hostname], viw_intern[hostname]);
-        });
+          });
 
-        // TBD: g5k & exogeni
-        const g5k = [
-        ];
-        const exo = [
-        ];
+          // TBD: g5k & exogeni
+          const g5k = [
+          ];
+          const exo = [
+          ];
 
-        mtn_toggle.addEventListener("change", (ev) => {
+          mtn_toggle.addEventListener("change", (ev) => {
             if (ev.target.checked) {
-            mtn.forEach(tip => tip.show());
+              mtn.forEach(tip => tip.show());
             } else {
-            mtn.forEach(tip => tip.hide());
+              mtn.forEach(tip => tip.hide());
             }
-        });
-        ext_toggle.addEventListener("change", (ev) => {
+          });
+          ext_toggle.addEventListener("change", (ev) => {
             if (ev.target.checked) {
-            ext.forEach(tip => tip.show());
+              ext.forEach(tip => tip.show());
             } else {
-            ext.forEach(tip => tip.hide());
+              ext.forEach(tip => tip.hide());
             }
-        });
-        gts_toggle.addEventListener("change", (ev) => {
+          });
+          gts_toggle.addEventListener("change", (ev) => {
             if (ev.target.checked) {
-            gts.forEach(tip => tip.show());
+              gts.forEach(tip => tip.show());
             } else {
-            gts.forEach(tip => tip.hide());
+              gts.forEach(tip => tip.hide());
             }
-        });
-        dfn_toggle.addEventListener("change", (ev) => {
+          });
+          dfn_toggle.addEventListener("change", (ev) => {
             if (ev.target.checked) {
-            dfn.forEach(tip => tip.show());
+              dfn.forEach(tip => tip.show());
             } else {
-            dfn.forEach(tip => tip.hide());
+              dfn.forEach(tip => tip.hide());
             }
-        });
-        viw_toggle.addEventListener("change", (ev) => {
+          });
+          viw_toggle.addEventListener("change", (ev) => {
             if (ev.target.checked) {
-            viw.forEach(tip => tip.show());
+              viw.forEach(tip => tip.show());
             } else {
-            viw.forEach(tip => tip.hide());
+              viw.forEach(tip => tip.hide());
             }
-        });
-        g5k_toggle.addEventListener("change", (ev) => {
+          });
+          g5k_toggle.addEventListener("change", (ev) => {
             if (ev.target.checked) {
-            g5k.forEach(tip => tip.show());
+              g5k.forEach(tip => tip.show());
             } else {
-            g5k.forEach(tip => tip.hide());
+              g5k.forEach(tip => tip.hide());
             }
-        });
-        exo_toggle.addEventListener("change", (ev) => {
+          });
+          exo_toggle.addEventListener("change", (ev) => {
             if (ev.target.checked) {
-            exo.forEach(tip => tip.show());
+              exo.forEach(tip => tip.show());
             } else {
-            exo.forEach(tip => tip.hide());
+              exo.forEach(tip => tip.hide());
             }
-        });
+          });
 
-        window.cy = cy;
-    });
+          window.cy = cy;
+        });
     </script>
   </body>
 </html>

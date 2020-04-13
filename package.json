@@ -9,6 +9,7 @@
   "author": "Fin Christensen",
   "license": "MIT",
   "scripts": {
+    "start": "http-server",
     "generate-importmap": "node scripts/generate-import-map.js"
   },
   "bugs": {
@@ -27,6 +28,7 @@
     "tippy.js": "^5.1.3"
   },
   "devDependencies": {
-    "@jsenv/node-module-import-map": "^11.0.1"
+    "@jsenv/node-module-import-map": "^11.0.1",
+    "http-server": "^0.12.1"
   }
 }
