@@ -16,6 +16,8 @@
     <script defer src="node_modules/es-module-shims/dist/es-module-shims.min.js"></script>
     <script type="importmap-shim" src="importmap.json"></script>
     <script type="module-shim">
+      import '@polymer/paper-icon-button';
+      import '@polymer/iron-icons';
       import "@polymer/paper-toggle-button";
       import "@polymer/paper-card";
       import "@polymer/paper-button";
@@ -41,22 +43,104 @@
         position: absolute;
         bottom: 0;
         left: 0;
+        width: 320px;
+        height: 400px;
+        overflow: hidden;
         z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        transition-property: width, height, border-radius;
+        transition-duration: 100ms;
+        transition-timing-function: ease-out;
       }
 
       #menu .card-content {
         line-height: 2em;
+        flex-grow: 1;
+        width: 320px;
+        box-sizing: border-box;
+        right: 0;
+        top: 0;
+        transition-property: right, top;
+        transition-duration: 100ms;
+        transition-timing-function: ease-out;
+      }
+
+      #menu .card-actions {
+        width: 320px;
+        box-sizing: border-box;
       }
 
       .tippy-tooltip {
         font-size: 12px;
       }
+
+      #menu.minimized {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+      }
+
+      #menu.minimized .card-content {
+        right: 264px;
+        top: -16px;
+      }
+
+      .card-header {
+        display: flex;
+        margin-bottom: 1em;
+      }
+
+      .card-header .card-heading {
+        font-size: 24px;
+        font-weight: 400;
+        line-height: 32px;
+        flex-grow: 1;
+      }
+
+      .card-header .card-control {
+        position: relative;
+        width: 40px;
+      }
+
+      .card-header .card-control > * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition-property: opacity;
+        transition-duration: 100ms;
+        transition-timing-function: ease-out;
+      }
+
+      .card-header .card-control .hidden {
+        z-index: 0;
+        opacity: 0;
+      }
+
+      .card-header .card-control :not(.hidden) {
+        z-index: 1;
+        opacity: 1;
+      }
+
+      #open_menu {
+        background-color: var(--paper-indigo-500);
+        color: white;
+        border-radius: 50%;
+      }
     </style>
   </head>
 
   <body>
-    <paper-card heading="Show IP Addresses" id="menu">
+    <paper-card id="menu">
       <div class="card-content">
+        <div class="card-header">
+          <span class="card-heading">Show IP Addresses</span>
+          <span class="card-control">
+            <paper-icon-button id="open_menu" class="hidden" icon="icons:list"></paper-icon-button>
+            <paper-icon-button id="close_menu" icon="icons:close"></paper-icon-button>
+          </span>
+        </div>
         <paper-toggle-button id="mtn">Maintenance Access</paper-toggle-button>
         <paper-toggle-button id="ext">External Network</paper-toggle-button>
         <paper-toggle-button id="gts">AS GTS Internal Network</paper-toggle-button>
@@ -141,6 +225,23 @@
 
         return tip;
       }
+
+      const menu = document.getElementById("menu");
+      const open_menu_btn = document.getElementById("open_menu");
+      const close_menu_btn = document.getElementById("close_menu");
+
+      open_menu_btn.addEventListener("click", (ev) => {
+        menu.classList.remove("minimized");
+        open_menu_btn.classList.add("hidden");
+        close_menu_btn.classList.remove("hidden");
+      });
+
+      close_menu_btn.addEventListener("click", (ev) => {
+        menu.classList.add("minimized");
+        open_menu_btn.classList.remove("hidden");
+        close_menu_btn.classList.add("hidden");
+      });
+
       fetch('data/fed4fire.json')
         .then((response) => {
           return response.json();
