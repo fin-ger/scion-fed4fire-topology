@@ -16,9 +16,9 @@
     <script defer src="node_modules/es-module-shims/dist/es-module-shims.min.js"></script>
     <script type="importmap-shim" src="importmap.json"></script>
     <script type="module-shim">
-      import '@polymer/font-roboto-local';
-      import '@polymer/paper-icon-button';
-      import '@polymer/iron-icons';
+      import "@polymer/font-roboto-local";
+      import "@polymer/paper-icon-button";
+      import "@polymer/iron-icons";
       import "@polymer/paper-toggle-button";
       import "@polymer/paper-card";
       import "@polymer/paper-button";
@@ -142,7 +142,7 @@
             <paper-icon-button id="close_menu" icon="icons:close"></paper-icon-button>
           </span>
         </div>
-        <paper-toggle-button id="mtn">Maintenance Access</paper-toggle-button>
+        <paper-toggle-button id="mtn">Maintenance Information</paper-toggle-button>
         <paper-toggle-button id="ext">External Network</paper-toggle-button>
         <paper-toggle-button id="gts">AS GTS Internal Network</paper-toggle-button>
         <paper-toggle-button id="dfn">AS DFN Internal Network</paper-toggle-button>
@@ -174,7 +174,7 @@
             };
           };
           offset = "0,0";
-        } else if (offset === "trg") {
+        } else if (offset === "dst") {
           opts.renderedPosition = () => {
             let src = elem.renderedSourceEndpoint();
             let trg = elem.renderedTargetEndpoint();
@@ -194,7 +194,7 @@
         // unfortunately, a dummy element must be passed
         // as tippy only accepts a dom element as the target
         // https://github.com/atomiks/tippyjs/issues/661
-        let dummyDomEle = document.createElement('div');
+        let dummyDomEle = document.createElement("div");
 
         let tip = tippy(dummyDomEle, {
           onCreate: (instance) => { // mandatory
@@ -203,11 +203,11 @@
             instance.popperInstance.reference = ref;
           },
           lazy: false, // mandatory
-          trigger: 'manual', // mandatory
+          trigger: "manual", // mandatory
 
           // dom element inside the tippy:
           content: () => {
-            let div = document.createElement('div');
+            let div = document.createElement("div");
             div.innerHTML = text;
             return div;
           },
@@ -243,7 +243,7 @@
         close_menu_btn.classList.add("hidden");
       });
 
-      fetch('data/fed4fire.json')
+      fetch("data/fed4fire.json")
         .then((response) => {
           return response.json();
         })
@@ -391,185 +391,244 @@
           const g5k_toggle = document.getElementById("g5k");
           const exo_toggle = document.getElementById("exo");
 
-          let mtn_tip = {
+          const mtn_tip = {
             "vw0": "bottom",
             "vw1": "bottom",
             "ams0": "top",
-            "ams1": "top",
+            "ams1": "bottom",
             "ams2": "top",
-            "ams3": "top",
+            "ams3": "bottom",
             "ams4": "top",
-            "ams5": "top",
+            "ams5": "bottom",
             "par0": "left",
             "par1": "left",
             "par2": "left",
-            "ham0": "bottom",
-            "ham1": "bottom",
-            "ham2": "bottom",
-            "prg0": "bottom",
-            "prg1": "bottom",
-            "dfn0": "top",
-            "dfn1": "top",
-            "dfn2": "top",
-            "dfn3": "top",
-          };
-
-          let gts_mtn = configuration['GTS maintenance access'];
-          let gts_mtn_tippy = Object.keys(gts_mtn).map((hostname, _index) => {
-            // Offset to cut out `GTS VPN`
-            return makeTippy(cy, hostname, mtn_tip[hostname], `GTS VPN<br>${gts_mtn[hostname].substring(8)}`);
-          });
-          let dfn_mtn = configuration['DFN maintenance access'];
-          let dfn_mtn_tippy = Object.keys(dfn_mtn).map((hostname, _index) => {
-            return makeTippy(cy, hostname, mtn_tip[hostname], `DFN VPN<br>${dfn_mtn[hostname].substring(8)}`);
-          });
-          let viw_mtn = configuration['VWall maintenance access'];
-          let viw_mtn_tippy = Object.keys(viw_mtn).map((hostname, _index) => {
-            return makeTippy(cy, hostname, mtn_tip[hostname], viw_mtn[hostname]);
-          });
-
-          const mtn = gts_mtn_tippy.concat(dfn_mtn_tippy).concat(viw_mtn_tippy);
-          const ext = [
-            makeTippy(cy, "vw0-ams1", "right", "10.1.1.1", "trg"),
-            makeTippy(cy, "sidn0-ams2", "top", "10.1.2.1", "trg"),
-            makeTippy(cy, "sidn1-ams3", "top", "10.1.3.1", "trg"),
-            makeTippy(cy, "KREO NET-ams4", "top", "10.1.4.1", "trg"),
-            makeTippy(cy, "KREO NET-ams5", "top", "10.1.5.1", "trg"),
-            makeTippy(cy, "SWITCH-par1", "right", "10.1.6.1", "trg"),
-            makeTippy(cy, "vw1-ams0", "top", "10.1.7.1", "trg"),
-            makeTippy(cy, "Grid 5000-par0", "bottom", "10.1.8.1", "trg"),
-            makeTippy(cy, "Grid 5000-par2", "bottom", "10.1.9.1", "trg"),
-            makeTippy(cy, "dfn0-ham0", "bottom", "10.1.10.1", "trg"),
-            makeTippy(cy, "dfn1-ham1", "bottom", "10.1.11.1", "trg"),
-            makeTippy(cy, "SWITCH-ham2", "bottom", "10.1.12.1", "trg"),
-            makeTippy(cy, "prg0-SCMN", "bottom", "10.1.13.1", "src"),
-            makeTippy(cy, "prg0-OvGU AP", "left", "10.1.19.1", "src"),
-            makeTippy(cy, "prg1-Vienna", "right", "10.1.14.1", "src"),
-            makeTippy(cy, "prg1-OvGU Core", "top", "10.1.20.1", "src"),
-            makeTippy(cy, "vw0-Grid 5000", "left", "10.1.15.2", "src"),
-            makeTippy(cy, "vw0-ams1", "bottom", "10.1.1.2", "src"),
-            makeTippy(cy, "vw0-Exo Geni", "top", "10.1.16.2", "src"),
-            makeTippy(cy, "vw1-Grid 5000", "left", "10.1.17.2", "src"),
-            makeTippy(cy, "vw1-ams0", "bottom", "10.1.7.2", "src"),
-            makeTippy(cy, "vw1-Exo Geni", "bottom", "10.1.18.2", "src"),
-            makeTippy(cy, "vw0-Exo Geni", "top", "10.1.16.3", "trg"),
-            makeTippy(cy, "vw1-Exo Geni", "bottom", "10.1.18.3", "trg"),
-            makeTippy(cy, "dfn0-ham0", "top", "10.1.10.4", "src"),
-            makeTippy(cy, "dfn1-ham1", "top", "10.1.11.4", "src"),
-            makeTippy(cy, "sidn0-ams2", "bottom", "10.1.2.5", "src"),
-            makeTippy(cy, "sidn1-ams3", "bottom", "10.1.3.5", "src"),
-            makeTippy(cy, "SWITCH-par1", "left", "10.1.6.6", "src"),
-            makeTippy(cy, "SWITCH-ham2", "bottom", "10.1.12.6", "src"),
-            makeTippy(cy, "vw0-Grid 5000", "top", "10.1.15.7", "trg"),
-            makeTippy(cy, "vw1-Grid 5000", "right", "10.1.17.7", "trg"),
-            makeTippy(cy, "Grid 5000-par2", "bottom", "10.1.9.7", "src"),
-            makeTippy(cy, "Grid 5000-par0", "bottom", "10.1.8.7", "src"),
-            makeTippy(cy, "KREO NET-ams4", "left", "10.1.4.8", "src"),
-            makeTippy(cy, "KREO NET-ams5", "right", "10.1.5.8", "src"),
-            makeTippy(cy, "prg0-SCMN", "top", "10.1.13.9", "trg"),
-            makeTippy(cy, "prg0-OvGU AP", "top", "10.1.19.10", "trg"),
-            makeTippy(cy, "prg1-Vienna", "top", "10.1.14.11", "trg"),
-            makeTippy(cy, "prg1-OvGU Core", "top", "10.1.20.12", "trg"),
-          ];
-
-          let gts_tip = {
-            "ams0": "bottom",
-            "ams1": "bottom",
-            "ams2": "bottom",
-            "ams3": "bottom",
-            "ams4": "bottom",
-            "ams5": "bottom",
-            "par0": "right",
-            "par1": "right",
-            "par2": "right",
             "ham0": "top",
-            "ham1": "top",
+            "ham1": "bottom",
             "ham2": "top",
             "prg0": "top",
-            "prg1": "top",
+            "prg1": "bottom",
+            "dfn0": "left",
+            "dfn1": "right",
+            "dfn2": "left",
+            "dfn3": "right",
+            "SWITCH": "top",
           };
 
-          let gts_intern = configuration['GTS internal network'];
-          const gts = Object.keys(gts_intern).map((hostname, _index) => {
-            return makeTippy(cy, hostname, gts_tip[hostname], gts_intern[hostname]);
+          const mtn_cfg = configuration["Maintenance information"];
+          const mtn = Object.keys(mtn_cfg).map((hostname, _index) => {
+            let tooltip = `${mtn_cfg[hostname].address}`;
+            if (!!mtn_cfg[hostname].host_id) {
+              tooltip += `<br>${mtn_cfg[hostname].host_id}`;
+            }
+            return makeTippy(cy, hostname, mtn_tip[hostname], tooltip);
           });
 
-          let dfn_tip = {
-            "dfn0": "top",
-            "dfn1": "top",
-            "dfn2": "top",
-            "dfn3": "top",
+          const ext_tip = {
+            "vw0-ams1": {
+              "src": "bottom",
+              "dst": "right",
+            },
+            "sidn0-ams2": {
+              "src": "bottom",
+              "dst": "top",
+            },
+            "sidn1-ams3": {
+              "src": "bottom",
+              "dst": "top",
+            },
+            "KREO NET-ams4": {
+              "src": "left",
+              "dst": "top",
+            },
+            "KREO NET-ams5": {
+              "src": "right",
+              "dst": "top",
+            },
+            "SWITCH-par1": {
+              "src": "left",
+              "dst": "right",
+            },
+            "vw1-ams0": {
+              "src": "bottom",
+              "dst": "top",
+            },
+            "Grid 5000-par0": {
+              "src": "bottom",
+              "dst": "bottom",
+            },
+            "Grid 5000-par2": {
+              "src": "bottom",
+              "dst": "bottom",
+            },
+            "dfn0-ham0": {
+              "src": "top",
+              "dst": "bottom",
+            },
+            "dfn1-ham1": {
+              "src": "top",
+              "dst": "bottom",
+            },
+            "SWITCH-ham2": {
+              "src": "bottom",
+              "dst": "bottom",
+            },
+            "prg0-SCMN": {
+              "src": "bottom",
+              "dst": "top",
+            },
+            "prg0-OvGU AP": {
+              "src": "left",
+              "dst": "top",
+            },
+            "prg1-Vienna": {
+              "src": "right",
+              "dst": "top",
+            },
+            "prg1-OvGU Core": {
+              "src": "top",
+              "dst": "top",
+            },
+            "vw0-Grid 5000": {
+              "src": "left",
+              "dst": "top",
+            },
+            "vw0-Exo Geni": {
+              "src": "top",
+              "dst": "top",
+            },
+            "vw1-Grid 5000": {
+              "src": "left",
+              "dst": "right",
+            },
+            "vw1-Exo Geni": {
+              "src": "bottom",
+              "dst": "bottom",
+            },
           };
-          let dfn_intern = configuration['DFN internal network'];
-          const dfn = Object.keys(dfn_intern).map((hostname, _index) => {
-            return makeTippy(cy, hostname, dfn_tip[hostname], dfn_intern[hostname]);
-          });
-          let viw_tip = {
-            "vw0": "top",
-            "vw1": "top",
-          }
-          let viw_intern = configuration['VWall internal network']
-          const viw = Object.keys(viw_intern).map((hostname, _index) => {
-            return makeTippy(cy, hostname, viw_tip[hostname], viw_intern[hostname]);
+
+          const ext_cfg = configuration["External links"];
+          const ext = Object.keys(ext_cfg).flatMap((edge_name, _index) => {
+            let tooltipSrc = ext_cfg[edge_name].src.address;
+            if (!!ext_cfg[edge_name].src.interface) {
+              tooltipSrc += ` @ ${ext_cfg[edge_name].src.interface}`;
+            }
+            if (!!ext_cfg[edge_name].src.vlan) {
+              tooltipSrc += `<br>${ext_cfg[edge_name].src.vlan}`;
+            }
+
+            let tooltipDst = ext_cfg[edge_name].dst.address;
+            if (!!ext_cfg[edge_name].dst.interface) {
+              tooltipDst += ` @ ${ext_cfg[edge_name].dst.interface}`;
+            }
+            if (!!ext_cfg[edge_name].dst.vlan) {
+              tooltipDst += `<br>${ext_cfg[edge_name].dst.vlan}`;
+            }
+
+            return [
+              makeTippy(cy, edge_name, ext_tip[edge_name].src, tooltipSrc, "src"),
+              makeTippy(cy, edge_name, ext_tip[edge_name].dst, tooltipDst, "dst"),
+            ];
           });
 
-          // TBD: g5k & exogeni
-          const g5k = [
-          ];
-          const exo = [
-          ];
+            const gts_tip = {
+              "ams0": "bottom",
+              "ams1": "bottom",
+              "ams2": "bottom",
+              "ams3": "bottom",
+              "ams4": "bottom",
+              "ams5": "bottom",
+              "par0": "right",
+              "par1": "right",
+              "par2": "right",
+              "ham0": "top",
+              "ham1": "top",
+              "ham2": "top",
+              "prg0": "top",
+              "prg1": "top",
+            };
+            const gts_intern = configuration["GTS internal network"];
+            const gts = Object.keys(gts_intern).map((hostname, _index) => {
+              return makeTippy(cy, hostname, gts_tip[hostname], gts_intern[hostname].address);
+            });
 
-          mtn_toggle.addEventListener("change", (ev) => {
-            if (ev.target.checked) {
-              mtn.forEach(tip => tip.show());
-            } else {
-              mtn.forEach(tip => tip.hide());
-            }
-          });
-          ext_toggle.addEventListener("change", (ev) => {
-            if (ev.target.checked) {
-              ext.forEach(tip => tip.show());
-            } else {
-              ext.forEach(tip => tip.hide());
-            }
-          });
-          gts_toggle.addEventListener("change", (ev) => {
-            if (ev.target.checked) {
-              gts.forEach(tip => tip.show());
-            } else {
-              gts.forEach(tip => tip.hide());
-            }
-          });
-          dfn_toggle.addEventListener("change", (ev) => {
-            if (ev.target.checked) {
-              dfn.forEach(tip => tip.show());
-            } else {
-              dfn.forEach(tip => tip.hide());
-            }
-          });
-          viw_toggle.addEventListener("change", (ev) => {
-            if (ev.target.checked) {
-              viw.forEach(tip => tip.show());
-            } else {
-              viw.forEach(tip => tip.hide());
-            }
-          });
-          g5k_toggle.addEventListener("change", (ev) => {
-            if (ev.target.checked) {
-              g5k.forEach(tip => tip.show());
-            } else {
-              g5k.forEach(tip => tip.hide());
-            }
-          });
-          exo_toggle.addEventListener("change", (ev) => {
-            if (ev.target.checked) {
-              exo.forEach(tip => tip.show());
-            } else {
-              exo.forEach(tip => tip.hide());
-            }
-          });
+            const dfn_tip = {
+              "dfn0": "top",
+              "dfn1": "top",
+              "dfn2": "top",
+              "dfn3": "top",
+            };
+            const dfn_intern = configuration["DFN internal network"];
+            const dfn = Object.keys(dfn_intern).map((hostname, _index) => {
+              return makeTippy(cy, hostname, dfn_tip[hostname], dfn_intern[hostname].address);
+            });
 
-          window.cy = cy;
+            const viw_tip = {
+              "vw0": "top",
+              "vw1": "top",
+            };
+            const viw_intern = configuration["VWall internal network"];
+            const viw = Object.keys(viw_intern).map((hostname, _index) => {
+              return makeTippy(cy, hostname, viw_tip[hostname], viw_intern[hostname].address);
+            });
+
+            // TBD: g5k & exogeni
+            const g5k = [
+            ];
+            const exo = [
+            ];
+
+            mtn_toggle.addEventListener("change", (ev) => {
+              if (ev.target.checked) {
+                mtn.forEach(tip => tip.show());
+              } else {
+                mtn.forEach(tip => tip.hide());
+              }
+            });
+            ext_toggle.addEventListener("change", (ev) => {
+              if (ev.target.checked) {
+                ext.forEach(tip => tip.show());
+              } else {
+                ext.forEach(tip => tip.hide());
+              }
+            });
+            gts_toggle.addEventListener("change", (ev) => {
+              if (ev.target.checked) {
+                gts.forEach(tip => tip.show());
+              } else {
+                gts.forEach(tip => tip.hide());
+              }
+            });
+            dfn_toggle.addEventListener("change", (ev) => {
+              if (ev.target.checked) {
+                dfn.forEach(tip => tip.show());
+              } else {
+                dfn.forEach(tip => tip.hide());
+              }
+            });
+            viw_toggle.addEventListener("change", (ev) => {
+              if (ev.target.checked) {
+                viw.forEach(tip => tip.show());
+              } else {
+                viw.forEach(tip => tip.hide());
+              }
+            });
+            g5k_toggle.addEventListener("change", (ev) => {
+              if (ev.target.checked) {
+                g5k.forEach(tip => tip.show());
+              } else {
+                g5k.forEach(tip => tip.hide());
+              }
+            });
+            exo_toggle.addEventListener("change", (ev) => {
+              if (ev.target.checked) {
+                exo.forEach(tip => tip.show());
+              } else {
+                exo.forEach(tip => tip.hide());
+              }
+            });
+
+            window.cy = cy;
         });
     </script>
   </body>
