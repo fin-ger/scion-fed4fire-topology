@@ -296,7 +296,13 @@
                 css: {
                   "curve-style": "bezier",
                 }
-              }
+              },
+              {
+                selector: ".done",
+                css: {
+                  "line-color": "green",
+                },
+              },
             ],
             elements: {
               nodes: [
@@ -395,6 +401,16 @@
               },
             },
           });
+
+          cy.batch(() => {
+            cy.$("#SIDN-ams2").addClass("done");
+            cy.$("#SIDN-ams3").addClass("done");
+            cy.$("#SWITCH-par1").addClass("done");
+            cy.$("#SWITCH-ham2").addClass("done");
+            cy.$("#dfn0-ham0").addClass("done");
+            cy.$("#dfn1-ham1").addClass("done");
+          });
+
           cy.anywherePanning();
 
           const mtn_toggle = document.getElementById("mtn");
