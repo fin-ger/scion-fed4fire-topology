@@ -50,6 +50,28 @@
         "address": "10.1.5.8"
       }
     },
+    "SIDN-ams2": {
+      "dst": {
+        "address": "10.1.3.1",
+        "interface": "ens20 / p15",
+        "vlan": "VLAN 34 / untagged"
+      },
+      "src": {
+        "address": "10.1.3.5",
+        "vlan": "VLAN 34 / tagged"
+      }
+    },
+    "SIDN-ams3": {
+      "dst": {
+        "address": "10.1.2.1",
+        "interface": "ens20 / p15",
+        "vlan": "VLAN 40 / untagged"
+      },
+      "src": {
+        "address": "10.1.2.5",
+        "vlan": "VLAN 40 / tagged"
+      }
+    },
     "SWITCH-ham2": {
       "dst": {
         "address": "10.1.12.1",
@@ -132,28 +154,6 @@
       "src": {
         "address": "10.1.14.1",
         "interface": "ens20 / p15"
-      }
-    },
-    "sidn0-ams2": {
-      "dst": {
-        "address": "10.1.2.1",
-        "interface": "ens20 / p15",
-        "vlan": "VLAN 40 / untagged"
-      },
-      "src": {
-        "address": "10.1.2.5",
-        "vlan": "VLAN 40 / tagged"
-      }
-    },
-    "sidn1-ams3": {
-      "dst": {
-        "address": "10.1.3.1",
-        "interface": "ens20 / p15",
-        "vlan": "VLAN 34 / untagged"
-      },
-      "src": {
-        "address": "10.1.3.5",
-        "vlan": "VLAN 34 / tagged"
       }
     },
     "vw0-Exo Geni": {

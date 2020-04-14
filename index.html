@@ -320,8 +320,6 @@
                 { data: { id: "ham2", parent: "HAM" } },
                 { data: { id: "prg0", parent: "PRG" } },
                 { data: { id: "prg1", parent: "PRG" } },
-                { data: { id: "sidn0", parent: "SIDN" } },
-                { data: { id: "sidn1", parent: "SIDN" } },
                 { data: { id: "dfn0", parent: "DFN" } },
                 { data: { id: "dfn1", parent: "DFN" } },
                 { data: { id: "dfn2", parent: "DFN" } },
@@ -330,8 +328,8 @@
                 { data: { id: "vw1", parent: "VirtualWall" } },
               ],
               edges: [
-                { data: { id: "sidn0-ams2", source: "sidn0", target: "ams2" } },
-                { data: { id: "sidn1-ams3", source: "sidn1", target: "ams3" } },
+                { data: { id: "SIDN-ams2", source: "SIDN", target: "ams2" } },
+                { data: { id: "SIDN-ams3", source: "SIDN", target: "ams3" } },
                 { data: { id: "KREO NET-ams4", source: "KREO NET", target: "ams4" } },
                 { data: { id: "KREO NET-ams5", source: "KREO NET", target: "ams5" } },
                 { data: { id: "SWITCH-par1", source: "SWITCH", target: "par1" } },
@@ -369,8 +367,7 @@
                 ham2: { x: 437.5, y: 400 },
                 prg0: { x: 212.5, y: 400 },
                 prg1: { x: 262.5, y: 400 },
-                sidn0: { x: 300, y: 175 },
-                sidn1: { x: 350, y: 175 },
+                SIDN: { x: 325, y: 175 },
                 "KREO NET": { x: 425, y: 175 },
                 SWITCH: { x: 575, y: 350 },
                 "Grid 5000": { x: 0, y: 300 },
@@ -438,12 +435,12 @@
               "src": "bottom",
               "dst": "right",
             },
-            "sidn0-ams2": {
-              "src": "bottom",
+            "SIDN-ams2": {
+              "src": "left",
               "dst": "top",
             },
-            "sidn1-ams3": {
-              "src": "bottom",
+            "SIDN-ams3": {
+              "src": "right",
               "dst": "top",
             },
             "KREO NET-ams4": {
