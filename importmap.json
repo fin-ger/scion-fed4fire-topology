@@ -18,6 +18,8 @@
     "cytoscape-popper/": "./node_modules/cytoscape-popper/",
     "es-module-shims": "./node_modules/es-module-shims/dist/es-module-shims.js",
     "es-module-shims/": "./node_modules/es-module-shims/dist/",
+    "cytoscape-svg": "./node_modules/cytoscape-svg/cytoscape-svg.js",
+    "cytoscape-svg/": "./node_modules/cytoscape-svg/",
     "cytoscape": "./node_modules/cytoscape/dist/cytoscape.cjs.js",
     "cytoscape/": "./node_modules/cytoscape/dist/",
     "popper.js": "./node_modules/popper.js/dist/esm/popper.js",

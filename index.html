@@ -12,6 +12,7 @@
     <script src="node_modules/cytoscape-popper/cytoscape-popper.js"></script>
     <script src="node_modules/tippy.js/dist/tippy-bundle.iife.min.js"></script>
     <script src="node_modules/cytoscape-anywhere-panning/dist/index.js"></script>
+    <script src="node_modules/cytoscape-svg/cytoscape-svg.js"></script>
 
     <script defer src="node_modules/es-module-shims/dist/es-module-shims.min.js"></script>
     <script type="importmap-shim" src="importmap.json"></script>
@@ -159,12 +160,21 @@
       <div class="card-actions">
         <a href="data/fed4fire.json" tabindex="-1"><paper-button>Export JSON</paper-button></a>
         <a href="data/fed4fire.yaml" tabindex="-1"><paper-button>Export YAML</paper-button></a>
+        <a tabindex="-1" style="color: blue" onclick="window.location=showSVG()"><paper-button>Export SVG</paper-button></a>
       </div>
     </paper-card>
 
     <div id="cy"></div>
 
     <script>
+
+      function showSVG() {
+        let content = cy.svg({scale: 2, full:true});
+        let blob = new Blob([content],{type:"image/svg+xml;charset=utf-8"});
+        let url = URL.createObjectURL(blob);
+        return url;
+      }
+
       function makeTippy(cy, id, placement, text, offset) {
         let elem = cy.getElementById(id);
         let opts = {};
@@ -385,7 +395,6 @@
               },
             },
           });
-
           cy.anywherePanning();
 
           const mtn_toggle = document.getElementById("mtn");

@@ -26,6 +26,7 @@
     "cytoscape": "^3.14.0",
     "cytoscape-anywhere-panning": "^0.5.3",
     "cytoscape-popper": "^1.0.6",
+    "cytoscape-svg": "^0.2.0",
     "es-module-shims": "^0.4.6",
     "popper.js": "^1.16.0",
     "tippy.js": "^5.1.3"
