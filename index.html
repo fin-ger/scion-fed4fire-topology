@@ -47,7 +47,7 @@
         bottom: 0;
         left: 0;
         width: 320px;
-        height: 400px;
+        height: 420px;
         overflow: hidden;
         z-index: 99999;
         display: flex;
@@ -211,6 +211,7 @@
             <paper-icon-button id="close_menu" icon="icons:close"></paper-icon-button>
           </span>
         </div>
+        <paper-toggle-button id="pub">Public Network</paper-toggle-button>
         <paper-toggle-button id="mtn">Maintenance Information</paper-toggle-button>
         <paper-toggle-button id="ext">External Network</paper-toggle-button>
         <paper-toggle-button id="ext_ext">External Network (extended)</paper-toggle-button>
@@ -542,6 +543,7 @@
 
           cy.anywherePanning();
 
+          const pub_toggle = document.getElementById("pub");
           const mtn_toggle = document.getElementById("mtn");
           const ext_toggle = document.getElementById("ext");
           const ext_ext_toggle = document.getElementById("ext_ext");
@@ -637,7 +639,7 @@
               "src": "bottom",
               "dst": "top",
             },
-            "prg0-OvGU AP": {
+            "prg0-OvGUAP": {
               "src": "left",
               "dst": "top",
             },
@@ -645,7 +647,7 @@
               "src": "right",
               "dst": "top",
             },
-            "prg1-OvGU Core": {
+            "prg1-OvGUCore": {
               "src": "top",
               "dst": "top",
             },
@@ -741,12 +743,28 @@
             return makeTippy(cy, hostname, viw_tip[hostname], viw_intern[hostname].address);
           });
 
+          const pub_tip = {
+            "dfn2": "top",
+            "dfn3": "bottom",
+          }
+          const pub_net = configuration["Public network"];
+          const pub =  Object.keys(pub_net).map((hostname, _index) => {
+            return makeTippy(cy, hostname, pub_tip[hostname], `${pub_net[hostname].address} @ ${pub_net[hostname].interface}`);
+          });
+
           // TBD: g5k & exogeni
           const g5k = [
           ];
           const exo = [
           ];
 
+          pub_toggle.addEventListener("change", (ev) => {
+            if (ev.target.checked) {
+              pub.forEach(tip => tip.show());
+            } else {
+              pub.forEach(tip => tip.hide());
+            }
+          });
           mtn_toggle.addEventListener("change", (ev) => {
             if (ev.target.checked) {
               mtn.forEach(tip => tip.show());

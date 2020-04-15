@@ -112,6 +112,14 @@ Grid5000 internal network:
   g5k1:
     address: 1.2.3.4
 
+Public network:
+  dfn2:
+    address: 193.174.10.21
+    interface: ens10 / p10
+  dfn3:
+    address: 193.174.10.20
+    interface: ens10 / p10
+
 External links:
   ams0-vw1:
     src:
@@ -211,7 +219,7 @@ External links:
       interface: ens20 / p15
     dst:
       address: 10.1.13.9
-  prg0-OvGU AP:
+  prg0-OvGUAP:
     src:
       address: 10.1.19.1
       interface: ens20 / p15
@@ -223,7 +231,7 @@ External links:
       interface: ens20 / p15
     dst:
       address: 10.1.14.11
-  prg1-OvGU Core:
+  prg1-OvGUCore:
     src:
       address: 10.1.20.1
       interface: ens20 / p15
