@@ -521,6 +521,11 @@
           });
 
           cy.batch(() => {
+            cy.$("#ams2-SIDN").addClass("done");
+            cy.$("#ams3-SIDN").addClass("done");
+            cy.$("#par1-SWITCH").addClass("done");
+            cy.$("#ham2-SWITCH").addClass("done");
+            cy.$("#ham0-dfn0").addClass("done");
             cy.$("#ham1-dfn1").addClass("done");
             cy.$("#dfn2").addClass("public");
             cy.$("#dfn3").addClass("public");
