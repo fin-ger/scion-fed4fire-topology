@@ -62,39 +62,6 @@
         user-select: none; /* Standard */
       }
 
-      #legend {
-          margin: 1em;
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          width: 320px;
-          height: 400px;
-          overflow: hidden;
-          z-index: 99999;
-          display: flex;
-          flex-direction: column;
-          align-items: stretch;
-          transition-property: width, height, border-radius;
-          transition-duration: 100ms;
-          transition-timing-function: ease-out;
-          -webkit-user-select: none; /* Safari */
-          -moz-user-select: none; /* Firefox */
-          -ms-user-select: none; /* IE10+/Edge */
-          user-select: none; /* Standard */
-      }
-
-      #legend .card-content {
-          line-height: 2em;
-          flex-grow: 1;
-          width: 320px;
-          box-sizing: border-box;
-          right: 0;
-          top: 0;
-          transition-property: right, top;
-          transition-duration: 100ms;
-          transition-timing-function: ease-out;
-      }
-
       #menu .card-content {
         line-height: 2em;
         flex-grow: 1;
@@ -112,6 +79,39 @@
         box-sizing: border-box;
       }
 
+      #legend {
+        margin: 1em;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 260px;
+        height: 200px;
+        overflow: hidden;
+        z-index: 99999;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        transition-property: width, height, border-radius;
+        transition-duration: 100ms;
+        transition-timing-function: ease-out;
+        -webkit-user-select: none; /* Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+/Edge */
+        user-select: none; /* Standard */
+      }
+
+      #legend .card-content {
+        line-height: 2em;
+        flex-grow: 1;
+        width: 260px;
+        box-sizing: border-box;
+        right: 0;
+        top: 0;
+        transition-property: right, top;
+        transition-duration: 100ms;
+        transition-timing-function: ease-out;
+      }
+
       .tippy-tooltip {
         font-size: 12px;
       }
@@ -123,9 +123,9 @@
       }
 
       #legend.minimized {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
       }
 
       #menu.minimized .card-content {
@@ -134,8 +134,8 @@
       }
 
       #legend.minimized .card-content {
-          right: 264px;
-          top: -16px;
+        right: 204px;
+        top: -16px;
       }
 
       .card-header {
