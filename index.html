@@ -62,6 +62,39 @@
         user-select: none; /* Standard */
       }
 
+      #legend {
+          margin: 1em;
+          position: absolute;
+          bottom: 0;
+          right: 0;
+          width: 320px;
+          height: 400px;
+          overflow: hidden;
+          z-index: 99999;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          transition-property: width, height, border-radius;
+          transition-duration: 100ms;
+          transition-timing-function: ease-out;
+          -webkit-user-select: none; /* Safari */
+          -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* IE10+/Edge */
+          user-select: none; /* Standard */
+      }
+
+      #legend .card-content {
+          line-height: 2em;
+          flex-grow: 1;
+          width: 320px;
+          box-sizing: border-box;
+          right: 0;
+          top: 0;
+          transition-property: right, top;
+          transition-duration: 100ms;
+          transition-timing-function: ease-out;
+      }
+
       #menu .card-content {
         line-height: 2em;
         flex-grow: 1;
@@ -89,9 +122,20 @@
         border-radius: 50%;
       }
 
+      #legend.minimized {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+      }
+
       #menu.minimized .card-content {
         right: 264px;
         top: -16px;
+      }
+
+      #legend.minimized .card-content {
+          right: 264px;
+          top: -16px;
       }
 
       .card-header {
@@ -135,6 +179,25 @@
         color: white;
         border-radius: 50%;
       }
+
+      #open_legend {
+          background-color: var(--paper-indigo-500);
+          color: white;
+          border-radius: 50%;
+      }
+
+      .dot {
+          height: 1em;
+          width: 1em;
+          border-radius: 1em;
+          display: block;
+          margin-right: 5px;
+      }
+
+      .legend-item {
+          display: flex;
+          align-items: center;
+      }
     </style>
   </head>
 
@@ -162,6 +225,24 @@
         <a href="data/fed4fire.yaml" tabindex="-1"><paper-button>YAML</paper-button></a>
         <a tabindex="-1" style="color: blue" onclick="window.location=showSVG()"><paper-button>SVG</paper-button></a>
       </div>
+    </paper-card>
+
+    <paper-card id="legend">
+        <div class="card-content">
+            <div class="card-header">
+                <span class="card-heading">Legend</span>
+                <span class="card-control">
+                    <paper-icon-button id="open_legend" class="hidden" icon="icons:list"></paper-icon-button>
+                    <paper-icon-button id="close_legend" icon="icons:close"></paper-icon-button>
+                </span>
+            </div>
+            <div style="display:flex; flex-direction: column;">
+                <div class="legend-item"><div style="background-color: #56B4E9;" class="dot"></div>Public Interface</div>
+                <div class="legend-item"><div style="background-color: #E69F00;" class="dot"></div>Pending VPN Interface</div>
+                <div class="legend-item"><div style="background-color: #999999;" class="dot"></div>Pending Links</div>
+                <div class="legend-item"><div style="background-color: #009E73;" class="dot"></div>Ready-to-use Links</div>
+            </div>
+        </div>
     </paper-card>
 
     <div id="cy"></div>
@@ -244,8 +325,11 @@
       }
 
       const menu = document.getElementById("menu");
+      const legend = document.getElementById("legend");
       const open_menu_btn = document.getElementById("open_menu");
       const close_menu_btn = document.getElementById("close_menu");
+      const open_legend_btn = document.getElementById("open_legend");
+      const close_legend_btn = document.getElementById("close_legend");
 
       open_menu_btn.addEventListener("click", (ev) => {
         menu.classList.remove("minimized");
@@ -253,10 +337,22 @@
         close_menu_btn.classList.remove("hidden");
       });
 
+      open_legend_btn.addEventListener("click", (ev) => {
+          legend.classList.remove("minimized");
+          open_legend_btn.classList.add("hidden");
+          close_legend_btn.classList.remove("hidden");
+      });
+
       close_menu_btn.addEventListener("click", (ev) => {
         menu.classList.add("minimized");
         open_menu_btn.classList.remove("hidden");
         close_menu_btn.classList.add("hidden");
+      });
+
+      close_legend_btn.addEventListener("click", (ev) => {
+          legend.classList.add("minimized");
+          open_legend_btn.classList.remove("hidden");
+          close_legend_btn.classList.add("hidden");
       });
 
       fetch("data/fed4fire.json")
@@ -308,6 +404,13 @@
                 css: {
                   "background-color": "#56B4E9",
                   "line-color": "#56B4E9",
+                },
+              },
+              {
+                selector: ".vpn",
+                css: {
+                    "background-color": "#E69F00",
+                    "line-color": "#E69F00",
                 },
               },
               {
@@ -374,9 +477,9 @@
                 { data: { id: "vw0-Grid 5000", source: "vw0", target: "Grid 5000" } },
                 { data: { id: "vw1-Grid 5000", source: "vw1", target: "Grid 5000" } },
                 { data: { id: "prg0-SCMN", source: "prg0", target: "SCMN" } },
-                { data: { id: "prg0-OvGU AP", source: "prg0", target: "OvGU AP" } },
+                { data: { id: "prg0-OvGUAP", source: "prg0", target: "OvGU AP" } },
                 { data: { id: "prg1-Vienna", source: "prg1", target: "Vienna" } },
-                { data: { id: "prg1-OvGU Core", source: "prg1", target: "OvGU Core" } },
+                { data: { id: "prg1-OvGUCore", source: "prg1", target: "OvGU Core" } },
                 { data: { id: "OvGUCore-dfn2", source: "OvGU Core", target: "dfn2" } },
                 { data: { id: "OvGUAP-dfn3", source: "OvGU AP", target: "dfn3" } },
               ]
@@ -426,6 +529,12 @@
             cy.$("#dfn1-ham1").addClass("done");
             cy.$("#dfn2").addClass("public");
             cy.$("#dfn3").addClass("public");
+              cy.$("#prg0").addClass("vpn");
+              cy.$("#prg1").addClass("vpn");
+              cy.$("#prg1-Vienna").addClass("vpn");
+              cy.$("#prg1-OvGUCore").addClass("vpn");
+              cy.$("#prg0-SCMN").addClass("vpn");
+              cy.$("#prg0-OvGUAP").addClass("vpn");
             cy.$("#OvGUCore-dfn2").addClass("public");
             cy.$("#OvGUAP-dfn3").addClass("curve");
             cy.$("#OvGUAP-dfn3").addClass("public");
