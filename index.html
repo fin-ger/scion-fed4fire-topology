@@ -300,7 +300,20 @@
               {
                 selector: ".done",
                 css: {
-                  "line-color": "green",
+                  "line-color": "#009E73",
+                },
+              },
+              {
+                selector: ".public",
+                css: {
+                  "background-color": "#56B4E9",
+                  "line-color": "#56B4E9",
+                },
+              },
+              {
+                selector: ".curve",
+                css: {
+                  "curve-style": "unbundled-bezier",
                 },
               },
             ],
@@ -364,6 +377,8 @@
                 { data: { id: "prg0-OvGU AP", source: "prg0", target: "OvGU AP" } },
                 { data: { id: "prg1-Vienna", source: "prg1", target: "Vienna" } },
                 { data: { id: "prg1-OvGU Core", source: "prg1", target: "OvGU Core" } },
+                { data: { id: "OvGUCore-dfn2", source: "OvGU Core", target: "dfn2" } },
+                { data: { id: "OvGUAP-dfn3", source: "OvGU AP", target: "dfn3" } },
               ]
             },
             layout: {
@@ -394,10 +409,10 @@
                 dfn1: { x: 437.5, y: 500 },
                 dfn2: { x: 387.5, y: 550 },
                 dfn3: { x: 437.5, y: 550 },
-                "OvGU AP": { x: 162.5, y: 500 },
-                SCMN: { x: 212.5, y: 550 },
-                "OvGU Core": { x: 262.5, y: 500 },
-                Vienna: { x: 312.5, y: 550 },
+                SCMN: { x: 162.5, y: 500 },
+                "OvGU AP": { x: 212.5, y: 600 },
+                Vienna: { x: 262.5, y: 500 },
+                "OvGU Core": { x: 312.5, y: 550 },
               },
             },
           });
@@ -409,6 +424,11 @@
             cy.$("#SWITCH-ham2").addClass("done");
             cy.$("#dfn0-ham0").addClass("done");
             cy.$("#dfn1-ham1").addClass("done");
+            cy.$("#dfn2").addClass("public");
+            cy.$("#dfn3").addClass("public");
+            cy.$("#OvGUCore-dfn2").addClass("public");
+            cy.$("#OvGUAP-dfn3").addClass("curve");
+            cy.$("#OvGUAP-dfn3").addClass("public");
           });
 
           cy.anywherePanning();
