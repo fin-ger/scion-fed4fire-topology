@@ -344,26 +344,26 @@
                 { data: { id: "vw1", parent: "VirtualWall" } },
               ],
               edges: [
-                { data: { id: "SIDN-ams2", source: "SIDN", target: "ams2" } },
-                { data: { id: "SIDN-ams3", source: "SIDN", target: "ams3" } },
-                { data: { id: "KREO NET-ams4", source: "KREO NET", target: "ams4" } },
-                { data: { id: "KREO NET-ams5", source: "KREO NET", target: "ams5" } },
-                { data: { id: "SWITCH-par1", source: "SWITCH", target: "par1" } },
-                { data: { id: "SWITCH-ham2", source: "SWITCH", target: "ham2" } },
-                { data: { id: "dfn0-ham0", source: "dfn0", target: "ham0" } },
-                { data: { id: "dfn1-ham1", source: "dfn1", target: "ham1" } },
-                { data: { id: "Grid 5000-par0", source: "Grid 5000", target: "par0" } },
-                { data: { id: "Grid 5000-par2", source: "Grid 5000", target: "par2" } },
-                { data: { id: "vw0-ams1", source: "vw0", target: "ams1" } },
-                { data: { id: "vw1-ams0", source: "vw1", target: "ams0" } },
-                { data: { id: "vw0-Exo Geni", source: "vw0", target: "Exo Geni" } },
-                { data: { id: "vw1-Exo Geni", source: "vw1", target: "Exo Geni" } },
-                { data: { id: "vw0-Grid 5000", source: "vw0", target: "Grid 5000" } },
-                { data: { id: "vw1-Grid 5000", source: "vw1", target: "Grid 5000" } },
+                { data: { id: "ams0-vw1", source: "ams0", target: "vw1" } },
+                { data: { id: "ams1-vw0", source: "ams1", target: "vw0" } },
+                { data: { id: "ams2-SIDN", source: "ams2", target: "SIDN" } },
+                { data: { id: "ams3-SIDN", source: "ams3", target: "SIDN" } },
+                { data: { id: "ams4-KREO NET", source: "ams4", target: "KREO NET" } },
+                { data: { id: "ams5-KREO NET", source: "ams5", target: "KREO NET" } },
+                { data: { id: "par0-Grid 5000", source: "par0", target: "Grid 5000" } },
+                { data: { id: "par1-SWITCH", source: "par1", target: "SWITCH" } },
+                { data: { id: "par2-Grid 5000", source: "par2", target: "Grid 5000" } },
+                { data: { id: "ham0-dfn0", source: "ham0", target: "dfn0" } },
+                { data: { id: "ham1-dfn1", source: "ham1", target: "dfn1" } },
+                { data: { id: "ham2-SWITCH", source: "ham2", target: "SWITCH" } },
                 { data: { id: "prg0-SCMN", source: "prg0", target: "SCMN" } },
                 { data: { id: "prg0-OvGU AP", source: "prg0", target: "OvGU AP" } },
                 { data: { id: "prg1-Vienna", source: "prg1", target: "Vienna" } },
                 { data: { id: "prg1-OvGU Core", source: "prg1", target: "OvGU Core" } },
+                { data: { id: "vw0-Exo Geni", source: "vw0", target: "Exo Geni" } },
+                { data: { id: "vw0-Grid 5000", source: "vw0", target: "Grid 5000" } },
+                { data: { id: "vw1-Exo Geni", source: "vw1", target: "Exo Geni" } },
+                { data: { id: "vw1-Grid 5000", source: "vw1", target: "Grid 5000" } },
               ]
             },
             layout: {
@@ -403,12 +403,12 @@
           });
 
           cy.batch(() => {
-            cy.$("#SIDN-ams2").addClass("done");
-            cy.$("#SIDN-ams3").addClass("done");
-            cy.$("#SWITCH-par1").addClass("done");
-            cy.$("#SWITCH-ham2").addClass("done");
-            cy.$("#dfn0-ham0").addClass("done");
-            cy.$("#dfn1-ham1").addClass("done");
+            cy.$("#ams2-SIDN").addClass("done");
+            cy.$("#ams3-SIDN").addClass("done");
+            cy.$("#par1-SWITCH").addClass("done");
+            cy.$("#ham2-SWITCH").addClass("done");
+            cy.$("#ham0-dfn0").addClass("done");
+            cy.$("#ham1-dfn1").addClass("done");
           });
 
           cy.anywherePanning();
@@ -456,51 +456,51 @@
           });
 
           const ext_tip = {
-            "vw0-ams1": {
-              "src": "bottom",
-              "dst": "right",
-            },
-            "SIDN-ams2": {
-              "src": "left",
-              "dst": "top",
-            },
-            "SIDN-ams3": {
-              "src": "right",
-              "dst": "top",
-            },
-            "KREO NET-ams4": {
-              "src": "left",
-              "dst": "top",
-            },
-            "KREO NET-ams5": {
-              "src": "right",
-              "dst": "top",
-            },
-            "SWITCH-par1": {
-              "src": "left",
-              "dst": "right",
-            },
-            "vw1-ams0": {
-              "src": "bottom",
-              "dst": "top",
-            },
-            "Grid 5000-par0": {
-              "src": "bottom",
-              "dst": "bottom",
-            },
-            "Grid 5000-par2": {
-              "src": "bottom",
-              "dst": "bottom",
-            },
-            "dfn0-ham0": {
+            "ams0-vw1": {
               "src": "top",
               "dst": "bottom",
             },
-            "dfn1-ham1": {
-              "src": "top",
+            "ams1-vw0": {
+              "src": "right",
               "dst": "bottom",
             },
-            "SWITCH-ham2": {
+            "ams2-SIDN": {
+              "src": "top",
+              "dst": "left",
+            },
+            "ams3-SIDN": {
+              "src": "top",
+              "dst": "right",
+            },
+            "ams4-KREO NET": {
+              "src": "top",
+              "dst": "left",
+            },
+            "ams5-KREO NET": {
+              "src": "top",
+              "dst": "right",
+            },
+            "par0-Grid 5000": {
+              "src": "bottom",
+              "dst": "bottom",
+            },
+            "par1-SWITCH": {
+              "src": "right",
+              "dst": "left",
+            },
+            "par2-Grid 5000": {
+              "src": "bottom",
+              "dst": "bottom",
+            },
+            "ham0-dfn0": {
+              "src": "bottom",
+              "dst": "top",
+            },
+            "ham1-dfn1": {
+              "src": "bottom",
+              "dst": "top",
+            },
+            "ham2-SWITCH": {
               "src": "bottom",
               "dst": "bottom",
             },
