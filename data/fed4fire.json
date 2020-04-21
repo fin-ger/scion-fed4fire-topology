@@ -1,367 +1,372 @@
 {
-    "GTS internal network": {
-        "ams0": {
-            "address": "10.42.42.1"
-        },
-        "ams1": {
-            "address": "10.42.42.2"
-        },
-        "ams2": {
-            "address": "10.42.42.3"
-        },
-        "ams3": {
-            "address": "10.42.42.4"
-        },
-        "ams4": {
-            "address": "10.42.42.5"
-        },
-        "ams5": {
-            "address": "10.42.42.6"
-        },
-        "par0": {
-            "address": "10.42.42.7"
-        },
-        "par1": {
-            "address": "10.42.42.8"
-        },
-        "par2": {
-            "address": "10.42.42.9"
-        },
-        "ham0": {
-            "address": "10.42.42.10"
-        },
-        "ham1": {
-            "address": "10.42.42.11"
-        },
-        "ham2": {
-            "address": "10.42.42.12"
-        },
-        "prg0": {
-            "address": "10.42.42.13"
-        },
-        "prg1": {
-            "address": "10.42.42.14"
-        }
+  "DFN internal network": {
+    "dfn0": {
+      "address": "10.43.43.1"
     },
-    "Maintenance information": {
-        "ams0": {
-            "host_id": "Host-1583943952690",
-            "address": "GTS VPN 172.16.0.143"
-        },
-        "ams1": {
-            "host_id": "Host-1583943962916",
-            "address": "GTS VPN 172.16.0.137"
-        },
-        "ams2": {
-            "host_id": "Host-1583943971954",
-            "address": "GTS VPN 172.16.0.146"
-        },
-        "ams3": {
-            "host_id": "Host-1583943981561",
-            "address": "GTS VPN 172.16.0.136"
-        },
-        "ams4": {
-            "host_id": "Host-1583943992007",
-            "address": "GTS VPN 172.16.0.144"
-        },
-        "ams5": {
-            "host_id": "Host-1583944002743",
-            "address": "GTS VPN 172.16.0.142"
-        },
-        "par0": {
-            "host_id": "Host-1583944014943",
-            "address": "GTS VPN 172.16.0.145"
-        },
-        "par1": {
-            "host_id": "Host-1583944022895",
-            "address": "GTS VPN 172.16.0.148"
-        },
-        "par2": {
-            "host_id": "Host-1583944106191",
-            "address": "GTS VPN 172.16.0.147"
-        },
-        "ham0": {
-            "host_id": "Host-1583944121793",
-            "address": "GTS VPN 172.16.0.141"
-        },
-        "ham1": {
-            "host_id": "Host-1583944154017",
-            "address": "GTS VPN 172.16.0.139"
-        },
-        "ham2": {
-            "host_id": "Host-1583944074132",
-            "address": "GTS VPN 172.16.0.149"
-        },
-        "prg0": {
-            "host_id": "Host-1583944030670",
-            "address": "GTS VPN 172.16.0.138"
-        },
-        "prg1": {
-            "host_id": "Host-1583944052625",
-            "address": "GTS VPN 172.16.0.140"
-        },
-        "vw0": {
-            "address": "TBD"
-        },
-        "vw1": {
-            "address": "TBD"
-        },
-        "dfn0": {
-            "host_id": "Host-1585584074813",
-            "address": "DFN VPN 172.16.0.20"
-        },
-        "dfn1": {
-            "host_id": "Host-1585584075100",
-            "address": "DFN VPN 172.16.0.19"
-        },
-        "dfn2": {
-            "host_id": "Host-1585584075363",
-            "address": "DFN VPN 172.16.0.21"
-        },
-        "dfn3": {
-            "host_id": "Host-1585584075629",
-            "address": "DFN VPN 172.16.0.22"
-        },
-        "SWITCH": {
-            "address": "195.176.28.157"
-        }
+    "dfn1": {
+      "address": "10.43.43.2"
     },
-    "VWall internal network": {
-        "vw0": {
-            "address": "10.44.44.1"
-        },
-        "vw1": {
-            "address": "10.44.44.2"
-        }
+    "dfn2": {
+      "address": "10.43.43.3"
     },
-    "DFN internal network": {
-        "dfn0": {
-            "address": "10.43.43.1"
-        },
-        "dfn1": {
-            "address": "10.43.43.2"
-        },
-        "dfn2": {
-            "address": "10.43.43.3"
-        },
-        "dfn3": {
-            "address": "10.43.43.4"
-        }
-    },
-    "Grid5000 internal network": {
-        "g5k0": {
-            "address": "1.2.3.4"
-        },
-        "g5k1": {
-            "address": "1.2.3.4"
-        }
-    },
-    "Public network": {
-        "dfn2": {
-            "address": "193.174.10.21",
-            "interface": "ens10 / p10"
-        },
-        "dfn3": {
-            "address": "193.174.10.20",
-            "interface": "ens10 / p10"
-        }
-    },
-    "External links": {
-        "ams0-vw1": {
-            "src": {
-                "address": "10.1.7.1",
-                "interface": "ens20 / p15",
-                "vlan": "VLAN 25 / untagged"
-            },
-            "dst": {
-                "address": "10.1.7.2",
-                "vlan": "VLAN 1175 / ?untagged"
-            }
-        },
-        "ams1-vw0": {
-            "src": {
-                "address": "10.1.1.1",
-                "interface": "ens20 / p15",
-                "vlan": "VLAN 37 / untagged"
-            },
-            "dst": {
-                "address": "10.1.1.2",
-                "vlan": "VLAN 1176 / ?untagged"
-            }
-        },
-        "ams2-SIDN": {
-            "src": {
-                "address": "10.1.3.1",
-                "interface": "ens20 / p15",
-                "vlan": "VLAN 34 / untagged"
-            },
-            "dst": {
-                "address": "10.1.3.5",
-                "vlan": "VLAN 34 / tagged"
-            }
-        },
-        "ams3-SIDN": {
-            "src": {
-                "address": "10.1.2.1",
-                "interface": "ens20 / p15",
-                "vlan": "VLAN 40 / untagged"
-            },
-            "dst": {
-                "address": "10.1.2.5",
-                "vlan": "VLAN 40 / tagged"
-            }
-        },
-        "ams4-KREO NET": {
-            "src": {
-                "address": "10.1.4.1",
-                "interface": "ens20 / p15"
-            },
-            "dst": {
-                "address": "10.1.4.8"
-            }
-        },
-        "ams5-KREO NET": {
-            "src": {
-                "address": "10.1.5.1",
-                "interface": "ens20 / p15"
-            },
-            "dst": {
-                "address": "10.1.5.8"
-            }
-        },
-        "par0-Grid 5000": {
-            "src": {
-                "address": "10.1.8.1",
-                "interface": "ens20 / p15"
-            },
-            "dst": {
-                "address": "10.1.8.7"
-            }
-        },
-        "par1-SWITCH": {
-            "src": {
-                "address": "10.1.6.1",
-                "interface": "ens20 / p15",
-                "vlan": "VLAN 35 / untagged"
-            },
-            "dst": {
-                "address": "10.1.6.6",
-                "interface": "ens2f0.11",
-                "vlan": "VLAN 11 / tagged"
-            }
-        },
-        "par2-Grid 5000": {
-            "src": {
-                "address": "10.1.9.1",
-                "interface": "ens20 / p15"
-            },
-            "dst": {
-                "address": "10.1.9.7"
-            }
-        },
-        "ham0-dfn0": {
-            "src": {
-                "address": "10.1.10.1",
-                "interface": "ens20 / p15",
-                "vlan": "VLAN 26 / untagged"
-            },
-            "dst": {
-                "address": "10.1.10.4",
-                "interface": "ens10 / p5",
-                "vlan": "VLAN 26 / untagged"
-            }
-        },
-        "ham1-dfn1": {
-            "src": {
-                "address": "10.1.11.1",
-                "interface": "ens20 / p15",
-                "vlan": "VLAN 33 / untagged"
-            },
-            "dst": {
-                "address": "10.1.11.4",
-                "interface": "ens10 / p5",
-                "vlan": "VLAN 33 / untagged"
-            }
-        },
-        "ham2-SWITCH": {
-            "src": {
-                "address": "10.1.12.1",
-                "interface": "ens20 / p15",
-                "vlan": "VLAN 44 / untagged"
-            },
-            "dst": {
-                "address": "10.1.12.6",
-                "interface": "ens2f0.16",
-                "vlan": "VLAN 16 / tagged"
-            }
-        },
-        "prg0-SCMN": {
-            "src": {
-                "address": "10.1.13.1",
-                "interface": "ens20 / p15"
-            },
-            "dst": {
-                "address": "10.1.13.9"
-            }
-        },
-        "prg0-OvGUAP": {
-            "src": {
-                "address": "10.1.19.1",
-                "interface": "ens20 / p15"
-            },
-            "dst": {
-                "address": "10.1.19.10"
-            }
-        },
-        "prg1-Vienna": {
-            "src": {
-                "address": "10.1.14.1",
-                "interface": "ens20 / p15"
-            },
-            "dst": {
-                "address": "10.1.14.11"
-            }
-        },
-        "prg1-OvGUCore": {
-            "src": {
-                "address": "10.1.20.1",
-                "interface": "ens20 / p15"
-            },
-            "dst": {
-                "address": "10.1.20.12"
-            }
-        },
-        "vw0-Grid 5000": {
-            "src": {
-                "address": "10.1.15.2"
-            },
-            "dst": {
-                "address": "10.1.15.7"
-            }
-        },
-        "vw0-Exo Geni": {
-            "src": {
-                "address": "10.1.16.2"
-            },
-            "dst": {
-                "address": "10.1.16.3"
-            }
-        },
-        "vw1-Grid 5000": {
-            "src": {
-                "address": "10.1.17.2"
-            },
-            "dst": {
-                "address": "10.1.17.7"
-            }
-        },
-        "vw1-Exo Geni": {
-            "src": {
-                "address": "10.1.18.2"
-            },
-            "dst": {
-                "address": "10.1.18.3"
-            }
-        }
+    "dfn3": {
+      "address": "10.43.43.4"
     }
+  },
+  "External links": {
+    "ams0-vw1": {
+      "dst": {
+        "address": "10.1.7.2",
+        "vlan": "VLAN 1175 / ?untagged"
+      },
+      "src": {
+        "address": "10.1.7.1",
+        "interface": "ens20 / p15",
+        "vlan": "VLAN 25 / untagged"
+      }
+    },
+    "ams1-vw0": {
+      "dst": {
+        "address": "10.1.1.2",
+        "vlan": "VLAN 1176 / ?untagged"
+      },
+      "src": {
+        "address": "10.1.1.1",
+        "interface": "ens20 / p15",
+        "vlan": "VLAN 37 / untagged"
+      }
+    },
+    "ams2-SIDN": {
+      "dst": {
+        "address": "10.1.3.5",
+        "interface": "ens7",
+        "vlan": "VLAN 34 / tagged"
+      },
+      "src": {
+        "address": "10.1.3.1",
+        "interface": "ens20 / p15",
+        "vlan": "VLAN 34 / untagged"
+      }
+    },
+    "ams3-SIDN": {
+      "dst": {
+        "address": "10.1.2.5",
+        "interface": "ens6",
+        "vlan": "VLAN 40 / tagged"
+      },
+      "src": {
+        "address": "10.1.2.1",
+        "interface": "ens20 / p15",
+        "vlan": "VLAN 40 / untagged"
+      }
+    },
+    "ams4-KREO NET": {
+      "dst": {
+        "address": "10.1.4.8"
+      },
+      "src": {
+        "address": "10.1.4.1",
+        "interface": "ens20 / p15"
+      }
+    },
+    "ams5-KREO NET": {
+      "dst": {
+        "address": "10.1.5.8"
+      },
+      "src": {
+        "address": "10.1.5.1",
+        "interface": "ens20 / p15"
+      }
+    },
+    "ham0-dfn0": {
+      "dst": {
+        "address": "10.1.10.4",
+        "interface": "ens10 / p5",
+        "vlan": "VLAN 26 / untagged"
+      },
+      "src": {
+        "address": "10.1.10.1",
+        "interface": "ens20 / p15",
+        "vlan": "VLAN 26 / untagged"
+      }
+    },
+    "ham1-dfn1": {
+      "dst": {
+        "address": "10.1.11.4",
+        "interface": "ens10 / p5",
+        "vlan": "VLAN 33 / untagged"
+      },
+      "src": {
+        "address": "10.1.11.1",
+        "interface": "ens20 / p15",
+        "vlan": "VLAN 33 / untagged"
+      }
+    },
+    "ham2-SWITCH": {
+      "dst": {
+        "address": "10.1.12.6",
+        "interface": "ens2f0.16",
+        "vlan": "VLAN 16 / tagged"
+      },
+      "src": {
+        "address": "10.1.12.1",
+        "interface": "ens20 / p15",
+        "vlan": "VLAN 44 / untagged"
+      }
+    },
+    "par0-Grid 5000": {
+      "dst": {
+        "address": "10.1.8.7"
+      },
+      "src": {
+        "address": "10.1.8.1",
+        "interface": "ens20 / p15"
+      }
+    },
+    "par1-SWITCH": {
+      "dst": {
+        "address": "10.1.6.6",
+        "interface": "ens2f0.11",
+        "vlan": "VLAN 11 / tagged"
+      },
+      "src": {
+        "address": "10.1.6.1",
+        "interface": "ens20 / p15",
+        "vlan": "VLAN 35 / untagged"
+      }
+    },
+    "par2-Grid 5000": {
+      "dst": {
+        "address": "10.1.9.7"
+      },
+      "src": {
+        "address": "10.1.9.1",
+        "interface": "ens20 / p15"
+      }
+    },
+    "prg0-OvGUAP": {
+      "dst": {
+        "address": "10.1.19.10"
+      },
+      "src": {
+        "address": "10.1.19.1",
+        "interface": "ens20 / p15"
+      }
+    },
+    "prg0-SCMN": {
+      "dst": {
+        "address": "10.1.13.9"
+      },
+      "src": {
+        "address": "10.1.13.1",
+        "interface": "ens20 / p15"
+      }
+    },
+    "prg1-OvGUCore": {
+      "dst": {
+        "address": "10.1.20.12"
+      },
+      "src": {
+        "address": "10.1.20.1",
+        "interface": "ens20 / p15"
+      }
+    },
+    "prg1-Vienna": {
+      "dst": {
+        "address": "10.1.14.11"
+      },
+      "src": {
+        "address": "10.1.14.1",
+        "interface": "ens20 / p15"
+      }
+    },
+    "vw0-Exo Geni": {
+      "dst": {
+        "address": "10.1.16.3"
+      },
+      "src": {
+        "address": "10.1.16.2"
+      }
+    },
+    "vw0-Grid 5000": {
+      "dst": {
+        "address": "10.1.15.7"
+      },
+      "src": {
+        "address": "10.1.15.2"
+      }
+    },
+    "vw1-Exo Geni": {
+      "dst": {
+        "address": "10.1.18.3"
+      },
+      "src": {
+        "address": "10.1.18.2"
+      }
+    },
+    "vw1-Grid 5000": {
+      "dst": {
+        "address": "10.1.17.7"
+      },
+      "src": {
+        "address": "10.1.17.2"
+      }
+    }
+  },
+  "GTS internal network": {
+    "ams0": {
+      "address": "10.42.42.1"
+    },
+    "ams1": {
+      "address": "10.42.42.2"
+    },
+    "ams2": {
+      "address": "10.42.42.3"
+    },
+    "ams3": {
+      "address": "10.42.42.4"
+    },
+    "ams4": {
+      "address": "10.42.42.5"
+    },
+    "ams5": {
+      "address": "10.42.42.6"
+    },
+    "ham0": {
+      "address": "10.42.42.10"
+    },
+    "ham1": {
+      "address": "10.42.42.11"
+    },
+    "ham2": {
+      "address": "10.42.42.12"
+    },
+    "par0": {
+      "address": "10.42.42.7"
+    },
+    "par1": {
+      "address": "10.42.42.8"
+    },
+    "par2": {
+      "address": "10.42.42.9"
+    },
+    "prg0": {
+      "address": "10.42.42.13"
+    },
+    "prg1": {
+      "address": "10.42.42.14"
+    }
+  },
+  "Grid5000 internal network": {
+    "g5k0": {
+      "address": "1.2.3.4"
+    },
+    "g5k1": {
+      "address": "1.2.3.4"
+    }
+  },
+  "Maintenance information": {
+    "SIDN": {
+      "address": "94.198.159.72"
+    },
+    "SWITCH": {
+      "address": "195.176.28.157"
+    },
+    "ams0": {
+      "address": "GTS VPN 172.16.0.143",
+      "host_id": "Host-1583943952690"
+    },
+    "ams1": {
+      "address": "GTS VPN 172.16.0.137",
+      "host_id": "Host-1583943962916"
+    },
+    "ams2": {
+      "address": "GTS VPN 172.16.0.146",
+      "host_id": "Host-1583943971954"
+    },
+    "ams3": {
+      "address": "GTS VPN 172.16.0.136",
+      "host_id": "Host-1583943981561"
+    },
+    "ams4": {
+      "address": "GTS VPN 172.16.0.144",
+      "host_id": "Host-1583943992007"
+    },
+    "ams5": {
+      "address": "GTS VPN 172.16.0.142",
+      "host_id": "Host-1583944002743"
+    },
+    "dfn0": {
+      "address": "DFN VPN 172.16.0.20",
+      "host_id": "Host-1585584074813"
+    },
+    "dfn1": {
+      "address": "DFN VPN 172.16.0.19",
+      "host_id": "Host-1585584075100"
+    },
+    "dfn2": {
+      "address": "DFN VPN 172.16.0.21",
+      "host_id": "Host-1585584075363"
+    },
+    "dfn3": {
+      "address": "DFN VPN 172.16.0.22",
+      "host_id": "Host-1585584075629"
+    },
+    "ham0": {
+      "address": "GTS VPN 172.16.0.141",
+      "host_id": "Host-1583944121793"
+    },
+    "ham1": {
+      "address": "GTS VPN 172.16.0.139",
+      "host_id": "Host-1583944154017"
+    },
+    "ham2": {
+      "address": "GTS VPN 172.16.0.149",
+      "host_id": "Host-1583944074132"
+    },
+    "par0": {
+      "address": "GTS VPN 172.16.0.145",
+      "host_id": "Host-1583944014943"
+    },
+    "par1": {
+      "address": "GTS VPN 172.16.0.148",
+      "host_id": "Host-1583944022895"
+    },
+    "par2": {
+      "address": "GTS VPN 172.16.0.147",
+      "host_id": "Host-1583944106191"
+    },
+    "prg0": {
+      "address": "GTS VPN 172.16.0.138",
+      "host_id": "Host-1583944030670"
+    },
+    "prg1": {
+      "address": "GTS VPN 172.16.0.140",
+      "host_id": "Host-1583944052625"
+    },
+    "vw0": {
+      "address": "TBD"
+    },
+    "vw1": {
+      "address": "TBD"
+    }
+  },
+  "Public network": {
+    "dfn2": {
+      "address": "193.174.10.21",
+      "interface": "ens10 / p10"
+    },
+    "dfn3": {
+      "address": "193.174.10.20",
+      "interface": "ens10 / p10"
+    }
+  },
+  "VWall internal network": {
+    "vw0": {
+      "address": "10.44.44.1"
+    },
+    "vw1": {
+      "address": "10.44.44.2"
+    }
+  }
 }

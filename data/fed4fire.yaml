@@ -89,6 +89,8 @@ Maintenance information:
     address: DFN VPN 172.16.0.22
   SWITCH:
     address: 195.176.28.157
+  SIDN:
+    address: 94.198.159.72
 
 VWall internal network:
   vw0:
@@ -144,6 +146,7 @@ External links:
       vlan: VLAN 34 / untagged
     dst:
       address: 10.1.3.5
+      interface: ens7
       vlan: VLAN 34 / tagged
   ams3-SIDN:
     src:
@@ -152,6 +155,7 @@ External links:
       vlan: VLAN 40 / untagged
     dst:
       address: 10.1.2.5
+      interface: ens6
       vlan: VLAN 40 / tagged
   ams4-KREO NET:
     src:
