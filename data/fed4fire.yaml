@@ -112,7 +112,7 @@ Grid5000 internal network:
   nan0:
     address: 172.16.66.99
   lil0:
-    address: 172.16.36.5
+    address: 172.16.37.2
 
 Public network:
   dfn2:
