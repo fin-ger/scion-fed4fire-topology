@@ -114,9 +114,10 @@
         "vlan": "VLAN 44 / untagged"
       }
     },
-    "par0-Grid 5000": {
+    "par0-lil0": {
       "dst": {
-        "address": "10.1.8.7"
+        "address": "10.1.8.7",
+        "vlan": "VLAN 1390"
       },
       "src": {
         "address": "10.1.8.1",
@@ -135,9 +136,10 @@
         "vlan": "VLAN 35 / untagged"
       }
     },
-    "par2-Grid 5000": {
+    "par2-nan0": {
       "dst": {
-        "address": "10.1.9.7"
+        "address": "10.1.9.7",
+        "vlan": "VLAN 1391"
       },
       "src": {
         "address": "10.1.9.1",
@@ -188,7 +190,7 @@
         "address": "10.1.16.2"
       }
     },
-    "vw0-Grid 5000": {
+    "vw0-lil0": {
       "dst": {
         "address": "10.1.15.7"
       },
@@ -204,7 +206,7 @@
         "address": "10.1.18.2"
       }
     },
-    "vw1-Grid 5000": {
+    "vw1-nan0": {
       "dst": {
         "address": "10.1.17.7"
       },
@@ -258,11 +260,11 @@
     }
   },
   "Grid5000 internal network": {
-    "g5k0": {
-      "address": "1.2.3.4"
+    "lil0": {
+      "address": "172.16.36.5"
     },
-    "g5k1": {
-      "address": "1.2.3.4"
+    "nan0": {
+      "address": "172.16.66.99"
     }
   },
   "Maintenance information": {

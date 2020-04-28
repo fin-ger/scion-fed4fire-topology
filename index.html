@@ -218,7 +218,7 @@
         <paper-toggle-button id="gts">AS GTS Internal Network</paper-toggle-button>
         <paper-toggle-button id="dfn">AS DFN Internal Network</paper-toggle-button>
         <paper-toggle-button id="viw">AS VirtualWall Internal Network</paper-toggle-button>
-        <paper-toggle-button id="g5k" disabled>AS Grid5000 Internal Network</paper-toggle-button>
+        <paper-toggle-button id="g5k">AS Grid5000 Internal Network</paper-toggle-button>
         <paper-toggle-button id="exo" disabled>AS ExoGeni Internal Network</paper-toggle-button>
       </div>
       <div class="card-actions">
@@ -432,7 +432,7 @@
                 { data: { id: "OvGU AP" } },
                 { data: { id: "DFN" } },
                 { data: { id: "Exo Geni" } },
-                { data: { id: "Grid 5000" } },
+                { data: { id: "Grid5000" } },
                 { data: { id: "VirtualWall" } },
                 { data: { id: "KREO NET" } },
                 { data: { id: "AMS", parent: "Géant" } },
@@ -459,6 +459,8 @@
                 { data: { id: "dfn3", parent: "DFN" } },
                 { data: { id: "vw0", parent: "VirtualWall" } },
                 { data: { id: "vw1", parent: "VirtualWall" } },
+                { data: { id: "lil0", parent: "Grid5000" } },
+                { data: { id: "nan0", parent: "Grid5000" } },
               ],
               edges: [
                 { data: { id: "ams0-vw1", source: "ams0", target: "vw1" } },
@@ -467,9 +469,9 @@
                 { data: { id: "ams3-SIDN", source: "ams3", target: "SIDN" } },
                 { data: { id: "ams4-KREO NET", source: "ams4", target: "KREO NET" } },
                 { data: { id: "ams5-KREO NET", source: "ams5", target: "KREO NET" } },
-                { data: { id: "par0-Grid 5000", source: "par0", target: "Grid 5000" } },
+                { data: { id: "par0-lil0", source: "par0", target: "lil0" } },
                 { data: { id: "par1-SWITCH", source: "par1", target: "SWITCH" } },
-                { data: { id: "par2-Grid 5000", source: "par2", target: "Grid 5000" } },
+                { data: { id: "par2-nan0", source: "par2", target: "nan0" } },
                 { data: { id: "ham0-dfn0", source: "ham0", target: "dfn0" } },
                 { data: { id: "ham1-dfn1", source: "ham1", target: "dfn1" } },
                 { data: { id: "ham2-SWITCH", source: "ham2", target: "SWITCH" } },
@@ -480,9 +482,9 @@
                 { data: { id: "OvGUCore-dfn2", source: "OvGU Core", target: "dfn2" } },
                 { data: { id: "OvGUAP-dfn3", source: "OvGU AP", target: "dfn3" } },
                 { data: { id: "vw0-Exo Geni", source: "vw0", target: "Exo Geni" } },
-                { data: { id: "vw0-Grid 5000", source: "vw0", target: "Grid 5000" } },
+                { data: { id: "vw0-lil0", source: "vw0", target: "lil0" } },
                 { data: { id: "vw1-Exo Geni", source: "vw1", target: "Exo Geni" } },
-                { data: { id: "vw1-Grid 5000", source: "vw1", target: "Grid 5000" } },
+                { data: { id: "vw1-nan0", source: "vw1", target: "nan0" } },
               ]
             },
             layout: {
@@ -505,7 +507,8 @@
                 SIDN: { x: 325, y: 175 },
                 "KREO NET": { x: 425, y: 175 },
                 SWITCH: { x: 575, y: 350 },
-                "Grid 5000": { x: 0, y: 300 },
+                lil0: { x: 0, y: 300 },
+                nan0: { x: 0, y: 350 },
                 "Exo Geni": { x: 175, y: 175 },
                 vw0: { x: 75, y: 150 },
                 vw1: { x: 75, y: 200 },
@@ -528,6 +531,8 @@
             cy.$("#ham2-SWITCH").addClass("done");
             cy.$("#ham0-dfn0").addClass("done");
             cy.$("#ham1-dfn1").addClass("done");
+            cy.$("#par0-lil0").addClass("done");
+            cy.$("#par2-nan0").addClass("done");
             cy.$("#dfn2").addClass("public");
             cy.$("#dfn3").addClass("public");
             cy.$("#prg0").addClass("vpn");
@@ -576,6 +581,8 @@
             "dfn3": "right",
             "SWITCH": "top",
             "SIDN": "top",
+            "nan0": "left",
+            "lil0": "left",
           };
 
           const mtn_cfg = configuration["Maintenance information"];
@@ -612,15 +619,15 @@
               "src": "top",
               "dst": "right",
             },
-            "par0-Grid 5000": {
-              "src": "bottom",
-              "dst": "bottom",
+            "par0-lil0": {
+              "src": "top",
+              "dst": "top",
             },
             "par1-SWITCH": {
               "src": "right",
               "dst": "left",
             },
-            "par2-Grid 5000": {
+            "par2-nan0": {
               "src": "bottom",
               "dst": "bottom",
             },
@@ -637,22 +644,22 @@
               "dst": "bottom",
             },
             "prg0-SCMN": {
-              "src": "bottom",
-              "dst": "top",
-            },
-            "prg0-OvGUAP": {
               "src": "left",
               "dst": "top",
             },
+            "prg0-OvGUAP": {
+              "src": "bottom",
+              "dst": "top",
+            },
             "prg1-Vienna": {
-              "src": "right",
+              "src": "bottom",
               "dst": "top",
             },
             "prg1-OvGUCore": {
-              "src": "top",
+              "src": "right",
               "dst": "top",
             },
-            "vw0-Grid 5000": {
+            "vw0-lil0": {
               "src": "left",
               "dst": "top",
             },
@@ -660,7 +667,7 @@
               "src": "top",
               "dst": "top",
             },
-            "vw1-Grid 5000": {
+            "vw1-nan0": {
               "src": "left",
               "dst": "right",
             },
@@ -753,9 +760,16 @@
             return makeTippy(cy, hostname, pub_tip[hostname], `${pub_net[hostname].address} @ ${pub_net[hostname].interface}`);
           });
 
-          // TBD: g5k & exogeni
-          const g5k = [
-          ];
+          const g5k_tip = {
+            "nan0": "left",
+            "lil0": "left",
+          };
+          const g5k_intern = configuration["Grid5000 internal network"];
+          const g5k = Object.keys(g5k_intern).map((hostname, _index) => {
+            return makeTippy(cy, hostname, g5k_tip[hostname], g5k_intern[hostname].address);
+          });
+
+          // TBD
           const exo = [
           ];
 
